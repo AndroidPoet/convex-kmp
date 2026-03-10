@@ -244,20 +244,6 @@ realtime.subscribe("messages:list", args {
 ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache
 ```
 
-## Publishing Setup
-
-This project publishes to Maven Central via GitHub Actions. Configure these repository secrets:
-
-| Secret | Purpose |
-|--------|---------|
-| `OSSRH_USERNAME` | Maven Central (Sonatype) username |
-| `OSSRH_PASSWORD` | Maven Central (Sonatype) password |
-| `SIGNING_KEY_ID` | GPG signing key ID |
-| `SIGNING_KEY` | GPG private key (ASCII-armored) |
-| `SIGNING_PASSWORD` | GPG key passphrase |
-
-Publishing triggers automatically when a GitHub Release is created.
-
 ## License
 
 ```

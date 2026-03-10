@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="art/logo.jpeg" width="180" alt="Convex KMP Logo">
+  <img src="art/logo.jpeg" width="720" alt="Convex KMP Logo">
 </p>
 
 <p align="center">

@@ -21,7 +21,7 @@ Kotlin Multiplatform SDK for [Convex](https://convex.dev) — type-safe, corouti
 - **Result monad** — `ConvexResult<T>` with `map`, `flatMap`, `recover` — no exceptions leak to callers
 - **Args DSL** — Build function arguments with a clean Kotlin DSL instead of raw JSON
 - **Modular architecture** — Pick only the modules you need: core, client, storage, realtime
-- **Koin DI** — First-class dependency injection modules for every component
+- **Simple wiring** — Factory functions with no DI framework required
 - **File storage** — Three-step upload flow, download URLs, and deletion out of the box
 - **Reactive subscriptions** — Observe query results as Kotlin Flows with automatic polling
 - **Dual auth modes** — Bearer tokens (end-user JWT) and admin auth (deploy keys)
@@ -66,15 +66,11 @@ val convex = Convex.create("https://your-app.convex.cloud") {
     logging = true
 }
 
-// Or with Koin DI
-startKoin {
-    modules(
-        convexModule(ConvexConfig(DeploymentUrl("https://your-app.convex.cloud"))),
-        storageModule,
-        realtimeModule,
-    )
-}
-val convex: ConvexClient by inject()
+val convex = createConvexClient(
+    ConvexConfig(DeploymentUrl("https://your-app.convex.cloud")),
+)
+val storage = createStorageClient(convex)
+val realtime = createRealtimeClient(convex)
 ```
 
 ### Authentication
@@ -192,7 +188,7 @@ realtime.subscribe("messages:list", args {
 │ Polling  │ Upload Flow  │ ConvexClient │ ConvexResult   │
 │ Flow     │ Download URL │ HttpTransport│ Args DSL       │
 │ Subscribe│ Delete       │ Auth State   │ Value IDs      │
-│          │              │ Koin Module  │ Models         │
+│          │              │ Factory API  │ Models         │
 ├──────────┴──────────────┼──────────────┤ Serialization  │
 │                         │   Ktor       │                │
 │                         │   OkHttp     │                │
@@ -206,7 +202,7 @@ realtime.subscribe("messages:list", args {
 | Module | Artifact | Description |
 |--------|----------|-------------|
 | **convex-core** | `io.github.androidpoet:convex-core` | Value types, result monad, args DSL, serialization models |
-| **convex-client** | `io.github.androidpoet:convex-client` | HTTP transport, query/mutation/action execution, auth, Koin DI |
+| **convex-client** | `io.github.androidpoet:convex-client` | HTTP transport, query/mutation/action execution, auth |
 | **convex-storage** | `io.github.androidpoet:convex-storage` | File upload (3-step flow), download URLs, deletion |
 | **convex-realtime** | `io.github.androidpoet:convex-realtime` | Reactive query subscriptions as Kotlin Flows |
 
@@ -228,7 +224,6 @@ realtime.subscribe("messages:list", args {
 | Serialization | [kotlinx.serialization 1.8.0](https://github.com/Kotlin/kotlinx.serialization) |
 | Coroutines | [kotlinx.coroutines 1.10.1](https://github.com/Kotlin/kotlinx.coroutines) |
 | Date/Time | [kotlinx-datetime 0.6.2](https://github.com/Kotlin/kotlinx-datetime) |
-| DI | [Koin 4.0.2](https://insert-koin.io/) |
 | Publishing | [vanniktech maven-publish 0.30.0](https://github.com/vanniktech/gradle-maven-publish-plugin) |
 
 ## Build

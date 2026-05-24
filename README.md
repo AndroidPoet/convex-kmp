@@ -21,7 +21,7 @@ Kotlin Multiplatform SDK for [Convex](https://convex.dev) — type-safe, corouti
 - **Result monad** — `ConvexResult<T>` with `map`, `flatMap`, `recover` — no exceptions leak to callers
 - **Args DSL** — Build function arguments with a clean Kotlin DSL instead of raw JSON
 - **Modular architecture** — Pick only the modules you need: core, client, storage, realtime
-- **Simple wiring** — Factory functions with no DI framework required
+- **Simple setup** — Factory functions for client creation
 - **File storage** — Three-step upload flow, download URLs, and deletion out of the box
 - **Reactive subscriptions** — Observe query results as Kotlin Flows with automatic polling
 - **Dual auth modes** — Bearer tokens (end-user JWT) and admin auth (deploy keys)
@@ -32,7 +32,6 @@ Kotlin Multiplatform SDK for [Convex](https://convex.dev) — type-safe, corouti
 Add the dependencies you need to your `build.gradle.kts`:
 
 ```kotlin
-// Version catalog (gradle/libs.versions.toml)
 [versions]
 convex = "0.1.0"
 
@@ -44,7 +43,6 @@ convex-realtime = { module = "io.github.androidpoet:convex-realtime", version.re
 ```
 
 ```kotlin
-// build.gradle.kts
 kotlin {
     sourceSets {
         commonMain.dependencies {
@@ -61,7 +59,6 @@ kotlin {
 ### Create a Client
 
 ```kotlin
-// Direct instantiation
 val convex = Convex.create("https://your-app.convex.cloud") {
     logging = true
 }
@@ -76,20 +73,16 @@ val realtime = createRealtimeClient(convex)
 ### Authentication
 
 ```kotlin
-// End-user JWT (from Clerk, Auth0, etc.)
 convex.setAuth("eyJhbG...")
 
-// Admin access with deploy key
 convex.setAdminAuth("prod:deploy-key-abc123")
 
-// Clear auth
 convex.clearAuth()
 ```
 
 ### Queries, Mutations & Actions
 
 ```kotlin
-// Query with args DSL
 val messages = convex.query("messages:list", args {
     "channel" to "#general"
     "limit" to 50
@@ -101,13 +94,11 @@ messages.onSuccess { data ->
     println("Error: ${error.message}")
 }
 
-// Mutation
 val id = convex.mutation("messages:send", args {
     "body" to "Hello from Kotlin!"
     "channel" to "#general"
 })
 
-// Action (external API calls)
 val result = convex.action("actions:sendEmail", args {
     "to" to "user@example.com"
     "subject" to "Welcome"
@@ -147,31 +138,28 @@ page.onSuccess { result ->
 ### File Storage
 
 ```kotlin
-val storage: StorageClient by inject()
+val storage = createStorageClient(convex)
 
-// One-step upload (generates URL + uploads)
 val storageId = storage.uploadFile(
     data = imageBytes,
     contentType = "image/png",
 )
 
-// Get download URL
 val url = storage.getUrl(storageId = StorageId("storage_abc123"))
 
-// Delete
 storage.deleteFile(storageId = StorageId("storage_abc123"))
 ```
 
 ### Realtime Subscriptions
 
 ```kotlin
-val realtime: RealtimeClient by inject()
+val realtime = createRealtimeClient(convex)
 
 realtime.subscribe("messages:list", args {
     "channel" to "#general"
 }).collect { result ->
     result.onSuccess { messages ->
-        // UI updates automatically
+        println(messages)
     }
 }
 ```

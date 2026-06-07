@@ -1,7 +1,5 @@
 package io.github.androidpoet.convex.core.result
 
-import kotlinx.coroutines.CancellationException
-
 public sealed interface ConvexResult<out T> {
 
     public data class Success<T>(val value: T) : ConvexResult<T>
@@ -32,8 +30,7 @@ public sealed interface ConvexResult<out T> {
                 Success(block())
             } catch (e: ConvexException) {
                 Failure(e.error)
-            } catch (e: Throwable) {
-                if (e is CancellationException) throw e
+            } catch (e: Exception) {
                 Failure(
                     ConvexError(
                         message = e.message ?: "Unknown error",
@@ -81,24 +78,3 @@ public inline fun <T> ConvexResult<T>.getOrElse(defaultValue: (ConvexError) -> T
         is ConvexResult.Success -> value
         is ConvexResult.Failure -> defaultValue(error)
     }
-
-public fun <T> ConvexResult<T>.toKotlinResult(): Result<T> = when (this) {
-    is ConvexResult.Success -> Result.success(value)
-    is ConvexResult.Failure -> Result.failure(error.toException())
-}
-
-public inline fun <T> Result<T>.toConvexResult(
-    mapThrowable: (Throwable) -> ConvexError = { throwable ->
-        val convexException = throwable as? ConvexException
-        convexException?.error ?: ConvexError(
-            message = throwable.message ?: "Unknown error",
-            data = null,
-        )
-    },
-): ConvexResult<T> = fold(
-    onSuccess = { ConvexResult.Success(it) },
-    onFailure = { throwable ->
-        if (throwable is CancellationException) throw throwable
-        ConvexResult.Failure(mapThrowable(throwable))
-    },
-)

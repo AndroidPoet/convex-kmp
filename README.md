@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="art/logo.jpeg" width="720" alt="Convex KMP Logo">
+  <img src="art/logo.svg" width="800" alt="Convex KMP">
 </p>
 
 <p align="center">
@@ -117,6 +117,9 @@ data class Message(
 )
 
 val messages: ConvexResult<List<Message>> = convex.queryTyped("messages:list")
+
+val kotlinResult: Result<List<Message>> = messages.toKotlinResult()
+val sdkResult: ConvexResult<List<Message>> = kotlinResult.toConvexResult()
 ```
 
 ### Pagination

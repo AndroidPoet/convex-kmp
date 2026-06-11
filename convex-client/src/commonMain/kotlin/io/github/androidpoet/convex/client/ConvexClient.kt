@@ -11,6 +11,16 @@ public interface ConvexClient {
         args: JsonObject = JsonObject(emptyMap()),
     ): ConvexResult<JsonElement>
 
+    /**
+     * Runs a query pinned to a consistent read timestamp (experimental, mirrors
+     * the JS `ConvexHttpClient.consistentQuery`). Successive consistent queries
+     * on this client observe a mutually consistent snapshot of the database.
+     */
+    public suspend fun consistentQuery(
+        path: String,
+        args: JsonObject = JsonObject(emptyMap()),
+    ): ConvexResult<JsonElement>
+
     public suspend fun mutation(
         path: String,
         args: JsonObject = JsonObject(emptyMap()),

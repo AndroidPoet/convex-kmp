@@ -26,6 +26,18 @@ public value class FunctionReference(public val value: String) {
     }
 }
 
+/**
+ * Builds a [FunctionReference] from a `"module:export"` path string, mirroring
+ * `makeFunctionReference` in `convex/server`.
+ */
+public fun makeFunctionReference(name: String): FunctionReference = FunctionReference(name)
+
+/**
+ * Returns the `"module:export"` path string of a [FunctionReference], mirroring
+ * `getFunctionName` in `convex/server`.
+ */
+public fun getFunctionName(reference: FunctionReference): String = reference.value
+
 @JvmInline
 @Serializable
 public value class DeploymentUrl(public val value: String) {

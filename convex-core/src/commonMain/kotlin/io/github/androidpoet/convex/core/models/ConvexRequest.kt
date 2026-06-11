@@ -8,7 +8,20 @@ import kotlinx.serialization.json.JsonObject
 public data class FunctionRequest(
     val path: String,
     val args: JsonObject = JsonObject(emptyMap()),
-    val format: String = "json",
+    val format: String = "convex_encoded_json",
+)
+
+/**
+ * Request body for the experimental consistent-query endpoints. When [ts] is
+ * `null` the backend chooses a read timestamp and returns it; subsequent
+ * requests pin that timestamp so successive reads are mutually consistent.
+ */
+@Serializable
+public data class ConsistentQueryRequest(
+    val path: String,
+    val args: JsonObject = JsonObject(emptyMap()),
+    val format: String = "convex_encoded_json",
+    val ts: Long? = null,
 )
 
 @Serializable

@@ -11,6 +11,8 @@ public data class ConvexResponse(
     val errorMessage: String? = null,
     val errorData: JsonElement? = null,
     val logLines: List<String> = emptyList(),
+    /** Read timestamp returned by consistent-query endpoints, when present. */
+    val ts: Long? = null,
 ) {
     @Serializable
     public enum class Status {

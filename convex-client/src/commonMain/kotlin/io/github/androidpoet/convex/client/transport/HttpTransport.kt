@@ -3,6 +3,7 @@ package io.github.androidpoet.convex.client.transport
 import io.github.androidpoet.convex.client.ConvexConfig
 import io.github.androidpoet.convex.client.LogLevel
 import io.github.androidpoet.convex.client.auth.AuthState
+import io.github.androidpoet.convex.core.models.ConsistentQueryRequest
 import io.github.androidpoet.convex.core.models.ConvexResponse
 import io.github.androidpoet.convex.core.models.FunctionRequest
 import io.github.androidpoet.convex.core.result.ConvexError
@@ -57,6 +58,8 @@ internal class HttpTransport(
         }
     }
 
+    private var consistencyTs: Long? = null
+
     fun setAuth(state: AuthState) {
         authState = state
     }
@@ -73,8 +76,31 @@ internal class HttpTransport(
             authState.headerValue()?.let { header("Authorization", it) }
             setBody(request)
         }
+        return parseResponse(response)
+    }
 
-        return when (response.status.value) {
+    /**
+     * Runs a consistent query (experimental). The first call hits `api/query_ts`
+     * to obtain a read timestamp; later calls hit `api/query_at_ts` pinned to it,
+     * so successive consistent queries observe a mutually consistent snapshot.
+     */
+    suspend fun executeConsistentQuery(
+        path: String,
+        args: JsonObject,
+    ): ConvexResponse {
+        val endpoint = if (consistencyTs == null) "api/query_ts" else "api/query_at_ts"
+        val request = ConsistentQueryRequest(path = path, args = args, ts = consistencyTs)
+        val response = httpClient.post(endpoint) {
+            authState.headerValue()?.let { header("Authorization", it) }
+            setBody(request)
+        }
+        val parsed = parseResponse(response)
+        parsed.ts?.let { consistencyTs = it }
+        return parsed
+    }
+
+    private suspend fun parseResponse(response: io.ktor.client.statement.HttpResponse): ConvexResponse =
+        when (response.status.value) {
             in 200..299 -> response.body<ConvexResponse>()
             else -> {
                 val body = response.bodyAsText()
@@ -86,7 +112,6 @@ internal class HttpTransport(
                 )
             }
         }
-    }
 
     suspend fun postRaw(
         url: String,

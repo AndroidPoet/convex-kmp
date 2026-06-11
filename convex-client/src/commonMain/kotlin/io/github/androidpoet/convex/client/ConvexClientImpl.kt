@@ -2,8 +2,10 @@ package io.github.androidpoet.convex.client
 
 import io.github.androidpoet.convex.client.auth.AuthState
 import io.github.androidpoet.convex.client.transport.HttpTransport
+import io.github.androidpoet.convex.core.models.ConvexResponse
 import io.github.androidpoet.convex.core.result.ConvexError
 import io.github.androidpoet.convex.core.result.ConvexResult
+import io.github.androidpoet.convex.core.values.ConvexCodec
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -16,6 +18,13 @@ internal class ConvexClientImpl(
         path: String,
         args: JsonObject,
     ): ConvexResult<JsonElement> = executeFunction("api/query", path, args)
+
+    override suspend fun consistentQuery(
+        path: String,
+        args: JsonObject,
+    ): ConvexResult<JsonElement> = ConvexResult.catching {
+        unwrap(transport.executeConsistentQuery(path, args))
+    }
 
     override suspend fun mutation(
         path: String,
@@ -54,14 +63,21 @@ internal class ConvexClientImpl(
         path: String,
         args: JsonObject,
     ): ConvexResult<JsonElement> = ConvexResult.catching {
-        val response = transport.executeFunction(endpoint, path, args)
+        unwrap(transport.executeFunction(endpoint, path, args))
+    }
+
+    /**
+     * Unwraps a [ConvexResponse], normalizing the `convex_encoded_json` wire
+     * form into plain JSON (so `$integer`/`$bytes`/`$float` become ordinary
+     * JSON values) and surfacing failures as [ConvexError]s.
+     */
+    private fun unwrap(response: ConvexResponse): JsonElement =
         if (response.isSuccess) {
-            response.value ?: JsonNull
+            ConvexCodec.decodeToPlainJson(response.value ?: JsonNull)
         } else {
             throw ConvexError(
                 message = response.errorMessage ?: "Unknown error",
-                data = response.errorData,
+                data = response.errorData?.let { ConvexCodec.decodeToPlainJson(it) },
             ).toException()
         }
-    }
 }

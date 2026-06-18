@@ -1,0 +1,23 @@
+public abstract interface class io/github/androidpoet/convex/storage/StorageClient {
+	public abstract fun deleteFile-66erzEk (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun generateUploadUrl (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUrl-66erzEk (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun upload (Ljava/lang/String;[BLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/storage/StorageClient$DefaultImpls {
+	public static synthetic fun deleteFile-66erzEk$default (Lio/github/androidpoet/convex/storage/StorageClient;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun generateUploadUrl$default (Lio/github/androidpoet/convex/storage/StorageClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getUrl-66erzEk$default (Lio/github/androidpoet/convex/storage/StorageClient;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun upload$default (Lio/github/androidpoet/convex/storage/StorageClient;Ljava/lang/String;[BLjava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/storage/StorageExtKt {
+	public static final fun uploadFile (Lio/github/androidpoet/convex/storage/StorageClient;[BLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun uploadFile$default (Lio/github/androidpoet/convex/storage/StorageClient;[BLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/storage/StorageFactoryKt {
+	public static final fun createStorageClient (Lio/github/androidpoet/convex/client/ConvexClient;)Lio/github/androidpoet/convex/storage/StorageClient;
+}
+

@@ -1,0 +1,107 @@
+---
+title: Getting Started
+description: Install Convex KMP and run your first query against a Convex deployment.
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Getting Started
+
+## Install
+
+Add the modules you need. `convex-client` already pulls in `convex-core`; storage and realtime
+are optional.
+
+```kotlin
+// libs.versions.toml
+[versions]
+convex = "0.1.1"
+
+[libraries]
+convex-core     = { module = "io.github.androidpoet:convex-core",     version.ref = "convex" }
+convex-client   = { module = "io.github.androidpoet:convex-client",   version.ref = "convex" }
+convex-storage  = { module = "io.github.androidpoet:convex-storage",  version.ref = "convex" }
+convex-realtime = { module = "io.github.androidpoet:convex-realtime", version.ref = "convex" }
+```
+
+```kotlin
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.convex.client)   // includes convex-core
+            implementation(libs.convex.storage)  // optional
+            implementation(libs.convex.realtime) // optional
+        }
+    }
+}
+```
+
+The artifacts are published to **Maven Central** under the `io.github.androidpoet` group.
+
+## Your first call
+
+<Steps>
+
+### Create a client
+
+Point the client at your deployment URL. Each platform resolves its own Ktor engine
+automatically.
+
+```kotlin
+val convex = createConvexClient(
+    ConvexConfig(DeploymentUrl("https://your-app.convex.cloud")),
+)
+```
+
+There is also a builder form:
+
+```kotlin
+val convex = Convex.create("https://your-app.convex.cloud") {
+    logging = true
+}
+```
+
+### Authenticate (optional)
+
+Set a bearer token for an end-user, or an admin deploy key. Calls before this run anonymously.
+
+```kotlin
+convex.setAuth("eyJhbG...")          // end-user JWT
+convex.setAdminAuth("prod:deploy-key-abc123")
+convex.clearAuth()
+```
+
+### Run a query
+
+`query`, `mutation` and `action` are all suspend functions that return a `ConvexResult`:
+
+```kotlin
+when (val result = convex.query("messages:list", args { "channel" to "#general" })) {
+    is ConvexResult.Success -> render(result.value)
+    is ConvexResult.Failure -> handle(result.error.message)
+}
+```
+
+### Close when done
+
+`ConvexClient` owns a Ktor `HttpClient`; release it when you're finished.
+
+```kotlin
+convex.close()
+```
+
+</Steps>
+
+<Callout type="info">
+  Convex KMP only talks to your deployment over HTTPS — it never bundles credentials. Keep
+  deploy keys server-side and hand the client short-lived user tokens via `setAuth`.
+</Callout>
+
+## Build from source
+
+```bash
+./gradlew compileKotlinJvm   # compile the JVM target
+./gradlew jvmTest            # run tests
+./gradlew spotlessApply      # format
+./gradlew detekt apiCheck    # static analysis + ABI check
+```

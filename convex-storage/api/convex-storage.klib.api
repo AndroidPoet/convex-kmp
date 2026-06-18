@@ -1,0 +1,17 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <convex-kmp:convex-storage>
+abstract interface io.github.androidpoet.convex.storage/StorageClient { // io.github.androidpoet.convex.storage/StorageClient|null[0]
+    abstract suspend fun deleteFile(kotlin/String = ..., io.github.androidpoet.convex.core.types/StorageId): io.github.androidpoet.convex.core.result/ConvexResult<kotlin/Unit> // io.github.androidpoet.convex.storage/StorageClient.deleteFile|deleteFile(kotlin.String;io.github.androidpoet.convex.core.types.StorageId){}[0]
+    abstract suspend fun generateUploadUrl(kotlin/String = ..., kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlin/String> // io.github.androidpoet.convex.storage/StorageClient.generateUploadUrl|generateUploadUrl(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun getUrl(kotlin/String = ..., io.github.androidpoet.convex.core.types/StorageId): io.github.androidpoet.convex.core.result/ConvexResult<kotlin/String?> // io.github.androidpoet.convex.storage/StorageClient.getUrl|getUrl(kotlin.String;io.github.androidpoet.convex.core.types.StorageId){}[0]
+    abstract suspend fun upload(kotlin/String, kotlin/ByteArray, kotlin/String = ...): io.github.androidpoet.convex.core.result/ConvexResult<io.github.androidpoet.convex.core.types/StorageId> // io.github.androidpoet.convex.storage/StorageClient.upload|upload(kotlin.String;kotlin.ByteArray;kotlin.String){}[0]
+}
+
+final fun io.github.androidpoet.convex.storage/createStorageClient(io.github.androidpoet.convex.client/ConvexClient): io.github.androidpoet.convex.storage/StorageClient // io.github.androidpoet.convex.storage/createStorageClient|createStorageClient(io.github.androidpoet.convex.client.ConvexClient){}[0]
+final suspend fun (io.github.androidpoet.convex.storage/StorageClient).io.github.androidpoet.convex.storage/uploadFile(kotlin/ByteArray, kotlin/String = ..., kotlin/String = ...): io.github.androidpoet.convex.core.result/ConvexResult<io.github.androidpoet.convex.core.types/StorageId> // io.github.androidpoet.convex.storage/uploadFile|uploadFile@io.github.androidpoet.convex.storage.StorageClient(kotlin.ByteArray;kotlin.String;kotlin.String){}[0]

@@ -15,7 +15,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ConvexResultTest {
-
     @Test
     fun success_returnsValue() {
         val result: ConvexResult<String> = ConvexResult.Success("hello")
@@ -56,8 +55,10 @@ class ConvexResultTest {
 
     @Test
     fun flatMap_chainsResults() {
-        val result = ConvexResult.Success(10)
-            .flatMap { ConvexResult.Success(it + 5) }
+        val result =
+            ConvexResult
+                .Success(10)
+                .flatMap { ConvexResult.Success(it + 5) }
         assertEquals(15, result.getOrNull())
     }
 
@@ -106,9 +107,10 @@ class ConvexResultTest {
 
     @Test
     fun catching_wrapsExceptionsAsFailure() {
-        val result = ConvexResult.catching<String> {
-            throw RuntimeException("boom")
-        }
+        val result =
+            ConvexResult.catching<String> {
+                throw RuntimeException("boom")
+            }
 
         assertTrue(result.isFailure)
         assertEquals("boom", result.errorOrNull()?.message)

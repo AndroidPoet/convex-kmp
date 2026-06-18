@@ -5,19 +5,25 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 @Serializable
-public value class DocumentId(public val value: String) {
+public value class DocumentId(
+    public val value: String,
+) {
     override fun toString(): String = value
 }
 
 @JvmInline
 @Serializable
-public value class StorageId(public val value: String) {
+public value class StorageId(
+    public val value: String,
+) {
     override fun toString(): String = value
 }
 
 @JvmInline
 @Serializable
-public value class FunctionReference(public val value: String) {
+public value class FunctionReference(
+    public val value: String,
+) {
     override fun toString(): String = value
 
     public companion object {
@@ -40,7 +46,9 @@ public fun getFunctionName(reference: FunctionReference): String = reference.val
 
 @JvmInline
 @Serializable
-public value class DeploymentUrl(public val value: String) {
+public value class DeploymentUrl(
+    public val value: String,
+) {
     public val siteUrl: String
         get() = value.replace(".convex.cloud", ".convex.site")
 

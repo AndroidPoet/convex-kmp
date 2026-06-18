@@ -9,7 +9,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ConvexResponseTest {
-
     private val json = Json { ignoreUnknownKeys = true }
 
     @Test

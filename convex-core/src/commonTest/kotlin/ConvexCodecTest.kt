@@ -4,7 +4,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.double
-import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.long
@@ -13,7 +12,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ConvexCodecTest {
-
     private fun roundTrip(value: ConvexValue): ConvexValue =
         ConvexCodec.decode(ConvexCodec.encode(value))
 
@@ -80,24 +78,26 @@ class ConvexCodecTest {
 
     @Test
     fun nested_objects_and_arrays_round_trip() {
-        val value = ConvexValue.Obj(
-            mapOf(
-                "id" to ConvexValue.Str("abc"),
-                "count" to ConvexValue.Int64(100L),
-                "ratio" to ConvexValue.Float64(0.25),
-                "tags" to ConvexValue.Arr(listOf(ConvexValue.Str("a"), ConvexValue.Bool(true))),
-                "missing" to ConvexValue.Null,
-            ),
-        )
+        val value =
+            ConvexValue.Obj(
+                mapOf(
+                    "id" to ConvexValue.Str("abc"),
+                    "count" to ConvexValue.Int64(100L),
+                    "ratio" to ConvexValue.Float64(0.25),
+                    "tags" to ConvexValue.Arr(listOf(ConvexValue.Str("a"), ConvexValue.Bool(true))),
+                    "missing" to ConvexValue.Null,
+                ),
+            )
         assertEquals(value, roundTrip(value))
     }
 
     @Test
     fun decodeToPlainJson_unwraps_special_forms() {
-        val wire = buildJsonObject {
-            put("count", ConvexCodec.encode(ConvexValue.Int64(7L)))
-            put("ratio", ConvexCodec.encode(ConvexValue.Float64(1.5)))
-        }
+        val wire =
+            buildJsonObject {
+                put("count", ConvexCodec.encode(ConvexValue.Int64(7L)))
+                put("ratio", ConvexCodec.encode(ConvexValue.Float64(1.5)))
+            }
         val plain = ConvexCodec.decodeToPlainJson(wire).jsonObject
         assertEquals(7L, plain.getValue("count").jsonPrimitive.long)
         assertEquals(1.5, plain.getValue("ratio").jsonPrimitive.double)
@@ -105,9 +105,10 @@ class ConvexCodecTest {
 
     @Test
     fun decodeToPlainJson_maps_undefined_to_null() {
-        val wire = buildJsonObject {
-            put("x", JsonObject(mapOf("\$undefined" to JsonPrimitive(true))))
-        }
+        val wire =
+            buildJsonObject {
+                put("x", JsonObject(mapOf("\$undefined" to JsonPrimitive(true))))
+            }
         val plain = ConvexCodec.decodeToPlainJson(wire).jsonObject
         assertTrue(plain.getValue("x") is kotlinx.serialization.json.JsonNull)
     }

@@ -8,6 +8,12 @@
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20JVM%20%7C%20WasmJs-green.svg" alt="Platforms">
   <img src="https://img.shields.io/badge/Maven%20Central-0.1.0-blue.svg" alt="Maven Central">
   <img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License">
+  <a href="https://github.com/AndroidPoet/convex-kmp/actions/workflows/build.yml"><img src="https://github.com/AndroidPoet/convex-kmp/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+</p>
+
+<p align="center">
+  📖 <strong><a href="https://androidpoet.github.io/convex-kmp/">Documentation</a></strong>
+  · <a href="CODE_OF_CONDUCT.md">Code of Conduct</a>
 </p>
 
 # Convex KMP

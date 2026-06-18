@@ -6,9 +6,10 @@ import kotlinx.serialization.json.Json
 public fun createStorageClient(client: ConvexClient): StorageClient =
     StorageClientImpl(
         client = client,
-        json = Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-            explicitNulls = false
-        },
+        json =
+            Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+                explicitNulls = false
+            },
     )

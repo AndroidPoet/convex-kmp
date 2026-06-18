@@ -12,7 +12,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonPrimitive
 
 public interface StorageClient {
-
     public suspend fun generateUploadUrl(
         functionPath: String = "storage:generateUploadUrl",
         args: JsonObject = JsonObject(emptyMap()),
@@ -39,7 +38,6 @@ internal class StorageClientImpl(
     private val client: ConvexClient,
     private val json: Json,
 ) : StorageClient {
-
     override suspend fun generateUploadUrl(
         functionPath: String,
         args: JsonObject,
@@ -52,22 +50,27 @@ internal class StorageClientImpl(
         uploadUrl: String,
         data: ByteArray,
         contentType: String,
-    ): ConvexResult<StorageId> = ConvexResult.catching {
-        val responseBody = client.postRaw(uploadUrl, data, contentType)
-        val response = json.decodeFromString<UploadResponse>(responseBody)
-        StorageId(response.storageId)
-    }
+    ): ConvexResult<StorageId> =
+        ConvexResult.catching {
+            val responseBody = client.postRaw(uploadUrl, data, contentType)
+            val response = json.decodeFromString<UploadResponse>(responseBody)
+            StorageId(response.storageId)
+        }
 
     override suspend fun getUrl(
         functionPath: String,
         storageId: StorageId,
     ): ConvexResult<String?> {
-        val args = JsonObject(
-            mapOf("storageId" to JsonPrimitive(storageId.value)),
-        )
+        val args =
+            JsonObject(
+                mapOf("storageId" to JsonPrimitive(storageId.value)),
+            )
         return client.query(functionPath, args).map { value ->
-            if (value is JsonNull) null
-            else value.jsonPrimitive.content
+            if (value is JsonNull) {
+                null
+            } else {
+                value.jsonPrimitive.content
+            }
         }
     }
 
@@ -75,9 +78,10 @@ internal class StorageClientImpl(
         functionPath: String,
         storageId: StorageId,
     ): ConvexResult<Unit> {
-        val args = JsonObject(
-            mapOf("storageId" to JsonPrimitive(storageId.value)),
-        )
+        val args =
+            JsonObject(
+                mapOf("storageId" to JsonPrimitive(storageId.value)),
+            )
         return client.mutation(functionPath, args).map { }
     }
 }

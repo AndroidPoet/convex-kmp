@@ -1,0 +1,82 @@
+---
+title: Queries & Mutations
+description: Call Convex queries, mutations and actions with the args DSL, typed decoding and pagination.
+---
+
+import { Callout } from 'nextra/components'
+
+# Queries, Mutations & Actions
+
+Every server function is addressed by its `module:export` path. The three call types map to
+Convex's function kinds and all return a `ConvexResult`.
+
+```kotlin
+val messages = convex.query("messages:list", args { "channel" to "#general" })
+val id       = convex.mutation("messages:send", args { "body" to "Hi!"; "channel" to "#general" })
+val sent     = convex.action("actions:sendEmail", args { "to" to "user@example.com" })
+```
+
+## The args DSL
+
+Build arguments with a small Kotlin builder instead of hand-rolling JSON. Nesting and nulls are
+supported.
+
+```kotlin
+val a = args {
+    "channel" to "#general"
+    "limit" to 50
+    "filter" to true
+    putNull("before")
+    nested("options") {
+        "includeDeleted" to false
+    }
+}
+```
+
+Use `emptyArgs()` when a function takes no parameters.
+
+## Typed results
+
+`queryTyped<T>()` decodes the response straight into a `@Serializable` type, so you never touch
+raw JSON.
+
+```kotlin
+@Serializable
+data class Message(
+    val _id: String,
+    val body: String,
+    val channel: String,
+    val _creationTime: Double,
+)
+
+val messages: ConvexResult<List<Message>> = convex.queryTyped("messages:list")
+```
+
+## Pagination
+
+`queryPaginated` wraps Convex's cursor pagination. Pass `cursor = null` for the first page, then
+feed `continueCursor` back in until `isDone`.
+
+```kotlin
+val page = convex.queryPaginated(
+    path = "messages:list",
+    args = args { "channel" to "#general" },
+    paginationOpts = PaginationOpts(numItems = 25, cursor = null),
+)
+
+page.onSuccess { result ->
+    println("Page: ${result.page}")
+    println("Has more: ${!result.isDone}")
+    println("Next cursor: ${result.continueCursor}")
+}
+```
+
+## Consistent reads
+
+When you need a read at the same logical timestamp as a prior call, use `consistentQuery` rather
+than `query`.
+
+<Callout type="info">
+  For reactive reads that re-fire whenever the underlying data changes, reach for the
+  [Realtime](/realtime) module instead of polling `query` yourself.
+</Callout>

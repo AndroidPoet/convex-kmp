@@ -1,0 +1,564 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <convex-kmp:convex-core>
+open annotation class io.github.androidpoet.convex.core.args/ArgsDsl : kotlin/Annotation { // io.github.androidpoet.convex.core.args/ArgsDsl|null[0]
+    constructor <init>() // io.github.androidpoet.convex.core.args/ArgsDsl.<init>|<init>(){}[0]
+}
+
+sealed interface <#A: out kotlin/Any?> io.github.androidpoet.convex.core.result/ConvexResult { // io.github.androidpoet.convex.core.result/ConvexResult|null[0]
+    open val isFailure // io.github.androidpoet.convex.core.result/ConvexResult.isFailure|{}isFailure[0]
+        open fun <get-isFailure>(): kotlin/Boolean // io.github.androidpoet.convex.core.result/ConvexResult.isFailure.<get-isFailure>|<get-isFailure>(){}[0]
+    open val isSuccess // io.github.androidpoet.convex.core.result/ConvexResult.isSuccess|{}isSuccess[0]
+        open fun <get-isSuccess>(): kotlin/Boolean // io.github.androidpoet.convex.core.result/ConvexResult.isSuccess.<get-isSuccess>|<get-isSuccess>(){}[0]
+
+    open fun errorOrNull(): io.github.androidpoet.convex.core.result/ConvexError? // io.github.androidpoet.convex.core.result/ConvexResult.errorOrNull|errorOrNull(){}[0]
+    open fun getOrNull(): #A? // io.github.androidpoet.convex.core.result/ConvexResult.getOrNull|getOrNull(){}[0]
+    open fun getOrThrow(): #A // io.github.androidpoet.convex.core.result/ConvexResult.getOrThrow|getOrThrow(){}[0]
+
+    final class <#A1: kotlin/Any?> Success : io.github.androidpoet.convex.core.result/ConvexResult<#A1> { // io.github.androidpoet.convex.core.result/ConvexResult.Success|null[0]
+        constructor <init>(#A1) // io.github.androidpoet.convex.core.result/ConvexResult.Success.<init>|<init>(1:0){}[0]
+
+        final val value // io.github.androidpoet.convex.core.result/ConvexResult.Success.value|{}value[0]
+            final fun <get-value>(): #A1 // io.github.androidpoet.convex.core.result/ConvexResult.Success.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): #A1 // io.github.androidpoet.convex.core.result/ConvexResult.Success.component1|component1(){}[0]
+        final fun copy(#A1 = ...): io.github.androidpoet.convex.core.result/ConvexResult.Success<#A1> // io.github.androidpoet.convex.core.result/ConvexResult.Success.copy|copy(1:0){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.result/ConvexResult.Success.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.result/ConvexResult.Success.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.result/ConvexResult.Success.toString|toString(){}[0]
+    }
+
+    final class Failure : io.github.androidpoet.convex.core.result/ConvexResult<kotlin/Nothing> { // io.github.androidpoet.convex.core.result/ConvexResult.Failure|null[0]
+        constructor <init>(io.github.androidpoet.convex.core.result/ConvexError) // io.github.androidpoet.convex.core.result/ConvexResult.Failure.<init>|<init>(io.github.androidpoet.convex.core.result.ConvexError){}[0]
+
+        final val error // io.github.androidpoet.convex.core.result/ConvexResult.Failure.error|{}error[0]
+            final fun <get-error>(): io.github.androidpoet.convex.core.result/ConvexError // io.github.androidpoet.convex.core.result/ConvexResult.Failure.error.<get-error>|<get-error>(){}[0]
+
+        final fun component1(): io.github.androidpoet.convex.core.result/ConvexError // io.github.androidpoet.convex.core.result/ConvexResult.Failure.component1|component1(){}[0]
+        final fun copy(io.github.androidpoet.convex.core.result/ConvexError = ...): io.github.androidpoet.convex.core.result/ConvexResult.Failure // io.github.androidpoet.convex.core.result/ConvexResult.Failure.copy|copy(io.github.androidpoet.convex.core.result.ConvexError){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.result/ConvexResult.Failure.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.result/ConvexResult.Failure.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.result/ConvexResult.Failure.toString|toString(){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.result/ConvexResult.Companion|null[0]
+        final inline fun <#A2: kotlin/Any?> catching(kotlin/Function0<#A2>): io.github.androidpoet.convex.core.result/ConvexResult<#A2> // io.github.androidpoet.convex.core.result/ConvexResult.Companion.catching|catching(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    }
+}
+
+sealed interface io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue|null[0]
+    final class Arr : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Arr|null[0]
+        constructor <init>(kotlin.collections/List<io.github.androidpoet.convex.core.values/ConvexValue>) // io.github.androidpoet.convex.core.values/ConvexValue.Arr.<init>|<init>(kotlin.collections.List<io.github.androidpoet.convex.core.values.ConvexValue>){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Arr.value|{}value[0]
+            final fun <get-value>(): kotlin.collections/List<io.github.androidpoet.convex.core.values/ConvexValue> // io.github.androidpoet.convex.core.values/ConvexValue.Arr.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin.collections/List<io.github.androidpoet.convex.core.values/ConvexValue> // io.github.androidpoet.convex.core.values/ConvexValue.Arr.component1|component1(){}[0]
+        final fun copy(kotlin.collections/List<io.github.androidpoet.convex.core.values/ConvexValue> = ...): io.github.androidpoet.convex.core.values/ConvexValue.Arr // io.github.androidpoet.convex.core.values/ConvexValue.Arr.copy|copy(kotlin.collections.List<io.github.androidpoet.convex.core.values.ConvexValue>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Arr.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Arr.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Arr.toString|toString(){}[0]
+    }
+
+    final class Bool : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Bool|null[0]
+        constructor <init>(kotlin/Boolean) // io.github.androidpoet.convex.core.values/ConvexValue.Bool.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Bool.value|{}value[0]
+            final fun <get-value>(): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Bool.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Bool.component1|component1(){}[0]
+        final fun copy(kotlin/Boolean = ...): io.github.androidpoet.convex.core.values/ConvexValue.Bool // io.github.androidpoet.convex.core.values/ConvexValue.Bool.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Bool.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Bool.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Bool.toString|toString(){}[0]
+    }
+
+    final class Bytes : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Bytes|null[0]
+        constructor <init>(kotlin/ByteArray) // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.<init>|<init>(kotlin.ByteArray){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.value|{}value[0]
+            final fun <get-value>(): kotlin/ByteArray // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.value.<get-value>|<get-value>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Bytes.toString|toString(){}[0]
+    }
+
+    final class Float64 : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Float64|null[0]
+        constructor <init>(kotlin/Double) // io.github.androidpoet.convex.core.values/ConvexValue.Float64.<init>|<init>(kotlin.Double){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Float64.value|{}value[0]
+            final fun <get-value>(): kotlin/Double // io.github.androidpoet.convex.core.values/ConvexValue.Float64.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/Double // io.github.androidpoet.convex.core.values/ConvexValue.Float64.component1|component1(){}[0]
+        final fun copy(kotlin/Double = ...): io.github.androidpoet.convex.core.values/ConvexValue.Float64 // io.github.androidpoet.convex.core.values/ConvexValue.Float64.copy|copy(kotlin.Double){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Float64.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Float64.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Float64.toString|toString(){}[0]
+    }
+
+    final class Int64 : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Int64|null[0]
+        constructor <init>(kotlin/Long) // io.github.androidpoet.convex.core.values/ConvexValue.Int64.<init>|<init>(kotlin.Long){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Int64.value|{}value[0]
+            final fun <get-value>(): kotlin/Long // io.github.androidpoet.convex.core.values/ConvexValue.Int64.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/Long // io.github.androidpoet.convex.core.values/ConvexValue.Int64.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): io.github.androidpoet.convex.core.values/ConvexValue.Int64 // io.github.androidpoet.convex.core.values/ConvexValue.Int64.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Int64.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Int64.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Int64.toString|toString(){}[0]
+    }
+
+    final class Obj : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Obj|null[0]
+        constructor <init>(kotlin.collections/Map<kotlin/String, io.github.androidpoet.convex.core.values/ConvexValue>) // io.github.androidpoet.convex.core.values/ConvexValue.Obj.<init>|<init>(kotlin.collections.Map<kotlin.String,io.github.androidpoet.convex.core.values.ConvexValue>){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Obj.value|{}value[0]
+            final fun <get-value>(): kotlin.collections/Map<kotlin/String, io.github.androidpoet.convex.core.values/ConvexValue> // io.github.androidpoet.convex.core.values/ConvexValue.Obj.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin.collections/Map<kotlin/String, io.github.androidpoet.convex.core.values/ConvexValue> // io.github.androidpoet.convex.core.values/ConvexValue.Obj.component1|component1(){}[0]
+        final fun copy(kotlin.collections/Map<kotlin/String, io.github.androidpoet.convex.core.values/ConvexValue> = ...): io.github.androidpoet.convex.core.values/ConvexValue.Obj // io.github.androidpoet.convex.core.values/ConvexValue.Obj.copy|copy(kotlin.collections.Map<kotlin.String,io.github.androidpoet.convex.core.values.ConvexValue>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Obj.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Obj.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Obj.toString|toString(){}[0]
+    }
+
+    final class Str : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Str|null[0]
+        constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.values/ConvexValue.Str.<init>|<init>(kotlin.String){}[0]
+
+        final val value // io.github.androidpoet.convex.core.values/ConvexValue.Str.value|{}value[0]
+            final fun <get-value>(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Str.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Str.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.github.androidpoet.convex.core.values/ConvexValue.Str // io.github.androidpoet.convex.core.values/ConvexValue.Str.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Str.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Str.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Str.toString|toString(){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.values/ConvexValue.Companion|null[0]
+        final const val MAX_INT64 // io.github.androidpoet.convex.core.values/ConvexValue.Companion.MAX_INT64|{}MAX_INT64[0]
+            final fun <get-MAX_INT64>(): kotlin/Long // io.github.androidpoet.convex.core.values/ConvexValue.Companion.MAX_INT64.<get-MAX_INT64>|<get-MAX_INT64>(){}[0]
+        final const val MIN_INT64 // io.github.androidpoet.convex.core.values/ConvexValue.Companion.MIN_INT64|{}MIN_INT64[0]
+            final fun <get-MIN_INT64>(): kotlin/Long // io.github.androidpoet.convex.core.values/ConvexValue.Companion.MIN_INT64.<get-MIN_INT64>|<get-MIN_INT64>(){}[0]
+    }
+
+    final object Null : io.github.androidpoet.convex.core.values/ConvexValue { // io.github.androidpoet.convex.core.values/ConvexValue.Null|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.values/ConvexValue.Null.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.values/ConvexValue.Null.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.core.values/ConvexValue.Null.toString|toString(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.args/ArgsBuilder { // io.github.androidpoet.convex.core.args/ArgsBuilder|null[0]
+    constructor <init>() // io.github.androidpoet.convex.core.args/ArgsBuilder.<init>|<init>(){}[0]
+
+    final fun (kotlin/String).to(kotlin.collections/List<kotlinx.serialization.json/JsonElement>) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.collections.List<kotlinx.serialization.json.JsonElement>){}[0]
+    final fun (kotlin/String).to(kotlin/Boolean) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.Boolean){}[0]
+    final fun (kotlin/String).to(kotlin/ByteArray) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.ByteArray){}[0]
+    final fun (kotlin/String).to(kotlin/Double) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.Double){}[0]
+    final fun (kotlin/String).to(kotlin/Int) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.Int){}[0]
+    final fun (kotlin/String).to(kotlin/Long) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.Long){}[0]
+    final fun (kotlin/String).to(kotlin/String) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlin.String){}[0]
+    final fun (kotlin/String).to(kotlinx.serialization.json/JsonElement) // io.github.androidpoet.convex.core.args/ArgsBuilder.to|to@kotlin.String(kotlinx.serialization.json.JsonElement){}[0]
+    final fun build(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.args/ArgsBuilder.build|build(){}[0]
+    final fun nested(kotlin/String, kotlin/Function1<io.github.androidpoet.convex.core.args/ArgsBuilder, kotlin/Unit>) // io.github.androidpoet.convex.core.args/ArgsBuilder.nested|nested(kotlin.String;kotlin.Function1<io.github.androidpoet.convex.core.args.ArgsBuilder,kotlin.Unit>){}[0]
+    final fun putNull(kotlin/String) // io.github.androidpoet.convex.core.args/ArgsBuilder.putNull|putNull(kotlin.String){}[0]
+}
+
+final class io.github.androidpoet.convex.core.models/ConnectionState { // io.github.androidpoet.convex.core.models/ConnectionState|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...) // io.github.androidpoet.convex.core.models/ConnectionState.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+
+    final val connectionCount // io.github.androidpoet.convex.core.models/ConnectionState.connectionCount|{}connectionCount[0]
+        final fun <get-connectionCount>(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.connectionCount.<get-connectionCount>|<get-connectionCount>(){}[0]
+    final val connectionRetries // io.github.androidpoet.convex.core.models/ConnectionState.connectionRetries|{}connectionRetries[0]
+        final fun <get-connectionRetries>(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.connectionRetries.<get-connectionRetries>|<get-connectionRetries>(){}[0]
+    final val hasEverConnected // io.github.androidpoet.convex.core.models/ConnectionState.hasEverConnected|{}hasEverConnected[0]
+        final fun <get-hasEverConnected>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.hasEverConnected.<get-hasEverConnected>|<get-hasEverConnected>(){}[0]
+    final val hasInflightRequests // io.github.androidpoet.convex.core.models/ConnectionState.hasInflightRequests|{}hasInflightRequests[0]
+        final fun <get-hasInflightRequests>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.hasInflightRequests.<get-hasInflightRequests>|<get-hasInflightRequests>(){}[0]
+    final val inflightActions // io.github.androidpoet.convex.core.models/ConnectionState.inflightActions|{}inflightActions[0]
+        final fun <get-inflightActions>(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.inflightActions.<get-inflightActions>|<get-inflightActions>(){}[0]
+    final val inflightMutations // io.github.androidpoet.convex.core.models/ConnectionState.inflightMutations|{}inflightMutations[0]
+        final fun <get-inflightMutations>(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.inflightMutations.<get-inflightMutations>|<get-inflightMutations>(){}[0]
+    final val isWebSocketConnected // io.github.androidpoet.convex.core.models/ConnectionState.isWebSocketConnected|{}isWebSocketConnected[0]
+        final fun <get-isWebSocketConnected>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.isWebSocketConnected.<get-isWebSocketConnected>|<get-isWebSocketConnected>(){}[0]
+
+    final fun component1(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.component3|component3(){}[0]
+    final fun component4(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.component5|component5(){}[0]
+    final fun component6(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.component7|component7(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): io.github.androidpoet.convex.core.models/ConnectionState // io.github.androidpoet.convex.core.models/ConnectionState.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConnectionState.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/ConnectionState.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/ConnectionState.toString|toString(){}[0]
+}
+
+final class io.github.androidpoet.convex.core.models/ConsistentQueryRequest { // io.github.androidpoet.convex.core.models/ConsistentQueryRequest|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlin/String = ..., kotlin/Long? = ...) // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonObject;kotlin.String;kotlin.Long?){}[0]
+
+    final val args // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.args|{}args[0]
+        final fun <get-args>(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.args.<get-args>|<get-args>(){}[0]
+    final val format // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.format|{}format[0]
+        final fun <get-format>(): kotlin/String // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.format.<get-format>|<get-format>(){}[0]
+    final val path // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.path|{}path[0]
+        final fun <get-path>(): kotlin/String // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.path.<get-path>|<get-path>(){}[0]
+    final val ts // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.ts|{}ts[0]
+        final fun <get-ts>(): kotlin/Long? // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.ts.<get-ts>|<get-ts>(){}[0]
+
+    final fun component1(): kotlin/String // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.component3|component3(){}[0]
+    final fun component4(): kotlin/Long? // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.component4|component4(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonObject = ..., kotlin/String = ..., kotlin/Long? = ...): io.github.androidpoet.convex.core.models/ConsistentQueryRequest // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.copy|copy(kotlin.String;kotlinx.serialization.json.JsonObject;kotlin.String;kotlin.Long?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/ConsistentQueryRequest> { // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/ConsistentQueryRequest // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/ConsistentQueryRequest) // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.ConsistentQueryRequest){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/ConsistentQueryRequest> // io.github.androidpoet.convex.core.models/ConsistentQueryRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.models/ConvexResponse { // io.github.androidpoet.convex.core.models/ConvexResponse|null[0]
+    constructor <init>(io.github.androidpoet.convex.core.models/ConvexResponse.Status, kotlinx.serialization.json/JsonElement? = ..., kotlin/String? = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Long? = ...) // io.github.androidpoet.convex.core.models/ConvexResponse.<init>|<init>(io.github.androidpoet.convex.core.models.ConvexResponse.Status;kotlinx.serialization.json.JsonElement?;kotlin.String?;kotlinx.serialization.json.JsonElement?;kotlin.collections.List<kotlin.String>;kotlin.Long?){}[0]
+
+    final val errorData // io.github.androidpoet.convex.core.models/ConvexResponse.errorData|{}errorData[0]
+        final fun <get-errorData>(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.models/ConvexResponse.errorData.<get-errorData>|<get-errorData>(){}[0]
+    final val errorMessage // io.github.androidpoet.convex.core.models/ConvexResponse.errorMessage|{}errorMessage[0]
+        final fun <get-errorMessage>(): kotlin/String? // io.github.androidpoet.convex.core.models/ConvexResponse.errorMessage.<get-errorMessage>|<get-errorMessage>(){}[0]
+    final val isError // io.github.androidpoet.convex.core.models/ConvexResponse.isError|{}isError[0]
+        final fun <get-isError>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConvexResponse.isError.<get-isError>|<get-isError>(){}[0]
+    final val isSuccess // io.github.androidpoet.convex.core.models/ConvexResponse.isSuccess|{}isSuccess[0]
+        final fun <get-isSuccess>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConvexResponse.isSuccess.<get-isSuccess>|<get-isSuccess>(){}[0]
+    final val logLines // io.github.androidpoet.convex.core.models/ConvexResponse.logLines|{}logLines[0]
+        final fun <get-logLines>(): kotlin.collections/List<kotlin/String> // io.github.androidpoet.convex.core.models/ConvexResponse.logLines.<get-logLines>|<get-logLines>(){}[0]
+    final val status // io.github.androidpoet.convex.core.models/ConvexResponse.status|{}status[0]
+        final fun <get-status>(): io.github.androidpoet.convex.core.models/ConvexResponse.Status // io.github.androidpoet.convex.core.models/ConvexResponse.status.<get-status>|<get-status>(){}[0]
+    final val ts // io.github.androidpoet.convex.core.models/ConvexResponse.ts|{}ts[0]
+        final fun <get-ts>(): kotlin/Long? // io.github.androidpoet.convex.core.models/ConvexResponse.ts.<get-ts>|<get-ts>(){}[0]
+    final val value // io.github.androidpoet.convex.core.models/ConvexResponse.value|{}value[0]
+        final fun <get-value>(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.models/ConvexResponse.value.<get-value>|<get-value>(){}[0]
+
+    final fun component1(): io.github.androidpoet.convex.core.models/ConvexResponse.Status // io.github.androidpoet.convex.core.models/ConvexResponse.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.models/ConvexResponse.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // io.github.androidpoet.convex.core.models/ConvexResponse.component3|component3(){}[0]
+    final fun component4(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.models/ConvexResponse.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/List<kotlin/String> // io.github.androidpoet.convex.core.models/ConvexResponse.component5|component5(){}[0]
+    final fun component6(): kotlin/Long? // io.github.androidpoet.convex.core.models/ConvexResponse.component6|component6(){}[0]
+    final fun copy(io.github.androidpoet.convex.core.models/ConvexResponse.Status = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin/String? = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Long? = ...): io.github.androidpoet.convex.core.models/ConvexResponse // io.github.androidpoet.convex.core.models/ConvexResponse.copy|copy(io.github.androidpoet.convex.core.models.ConvexResponse.Status;kotlinx.serialization.json.JsonElement?;kotlin.String?;kotlinx.serialization.json.JsonElement?;kotlin.collections.List<kotlin.String>;kotlin.Long?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/ConvexResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/ConvexResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/ConvexResponse.toString|toString(){}[0]
+
+    final enum class Status : kotlin/Enum<io.github.androidpoet.convex.core.models/ConvexResponse.Status> { // io.github.androidpoet.convex.core.models/ConvexResponse.Status|null[0]
+        enum entry ERROR // io.github.androidpoet.convex.core.models/ConvexResponse.Status.ERROR|null[0]
+        enum entry SUCCESS // io.github.androidpoet.convex.core.models/ConvexResponse.Status.SUCCESS|null[0]
+
+        final val entries // io.github.androidpoet.convex.core.models/ConvexResponse.Status.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.androidpoet.convex.core.models/ConvexResponse.Status> // io.github.androidpoet.convex.core.models/ConvexResponse.Status.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.github.androidpoet.convex.core.models/ConvexResponse.Status // io.github.androidpoet.convex.core.models/ConvexResponse.Status.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.github.androidpoet.convex.core.models/ConvexResponse.Status> // io.github.androidpoet.convex.core.models/ConvexResponse.Status.values|values#static(){}[0]
+
+        final object Companion : kotlinx.serialization.internal/SerializerFactory { // io.github.androidpoet.convex.core.models/ConvexResponse.Status.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/ConvexResponse.Status> // io.github.androidpoet.convex.core.models/ConvexResponse.Status.Companion.serializer|serializer(){}[0]
+            final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // io.github.androidpoet.convex.core.models/ConvexResponse.Status.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+        }
+    }
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/ConvexResponse> { // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/ConvexResponse // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/ConvexResponse) // io.github.androidpoet.convex.core.models/ConvexResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.ConvexResponse){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/ConvexResponse.Companion|null[0]
+        final val $childSerializers // io.github.androidpoet.convex.core.models/ConvexResponse.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/ConvexResponse> // io.github.androidpoet.convex.core.models/ConvexResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.models/FunctionRequest { // io.github.androidpoet.convex.core.models/FunctionRequest|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlin/String = ...) // io.github.androidpoet.convex.core.models/FunctionRequest.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
+
+    final val args // io.github.androidpoet.convex.core.models/FunctionRequest.args|{}args[0]
+        final fun <get-args>(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.models/FunctionRequest.args.<get-args>|<get-args>(){}[0]
+    final val format // io.github.androidpoet.convex.core.models/FunctionRequest.format|{}format[0]
+        final fun <get-format>(): kotlin/String // io.github.androidpoet.convex.core.models/FunctionRequest.format.<get-format>|<get-format>(){}[0]
+    final val path // io.github.androidpoet.convex.core.models/FunctionRequest.path|{}path[0]
+        final fun <get-path>(): kotlin/String // io.github.androidpoet.convex.core.models/FunctionRequest.path.<get-path>|<get-path>(){}[0]
+
+    final fun component1(): kotlin/String // io.github.androidpoet.convex.core.models/FunctionRequest.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.models/FunctionRequest.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.github.androidpoet.convex.core.models/FunctionRequest.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonObject = ..., kotlin/String = ...): io.github.androidpoet.convex.core.models/FunctionRequest // io.github.androidpoet.convex.core.models/FunctionRequest.copy|copy(kotlin.String;kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/FunctionRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/FunctionRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/FunctionRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/FunctionRequest> { // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/FunctionRequest // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/FunctionRequest) // io.github.androidpoet.convex.core.models/FunctionRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.FunctionRequest){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/FunctionRequest.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/FunctionRequest> // io.github.androidpoet.convex.core.models/FunctionRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.models/PaginationOpts { // io.github.androidpoet.convex.core.models/PaginationOpts|null[0]
+    constructor <init>(kotlin/Int, kotlin/String? = ...) // io.github.androidpoet.convex.core.models/PaginationOpts.<init>|<init>(kotlin.Int;kotlin.String?){}[0]
+
+    final val cursor // io.github.androidpoet.convex.core.models/PaginationOpts.cursor|{}cursor[0]
+        final fun <get-cursor>(): kotlin/String? // io.github.androidpoet.convex.core.models/PaginationOpts.cursor.<get-cursor>|<get-cursor>(){}[0]
+    final val numItems // io.github.androidpoet.convex.core.models/PaginationOpts.numItems|{}numItems[0]
+        final fun <get-numItems>(): kotlin/Int // io.github.androidpoet.convex.core.models/PaginationOpts.numItems.<get-numItems>|<get-numItems>(){}[0]
+
+    final fun component1(): kotlin/Int // io.github.androidpoet.convex.core.models/PaginationOpts.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // io.github.androidpoet.convex.core.models/PaginationOpts.component2|component2(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/String? = ...): io.github.androidpoet.convex.core.models/PaginationOpts // io.github.androidpoet.convex.core.models/PaginationOpts.copy|copy(kotlin.Int;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/PaginationOpts.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/PaginationOpts.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/PaginationOpts.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/PaginationOpts> { // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/PaginationOpts // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/PaginationOpts) // io.github.androidpoet.convex.core.models/PaginationOpts.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.PaginationOpts){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/PaginationOpts.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/PaginationOpts> // io.github.androidpoet.convex.core.models/PaginationOpts.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.models/PaginationResult { // io.github.androidpoet.convex.core.models/PaginationResult|null[0]
+    constructor <init>(kotlin.collections/List<kotlinx.serialization.json/JsonElement>, kotlin/String, kotlin/Boolean) // io.github.androidpoet.convex.core.models/PaginationResult.<init>|<init>(kotlin.collections.List<kotlinx.serialization.json.JsonElement>;kotlin.String;kotlin.Boolean){}[0]
+
+    final val continueCursor // io.github.androidpoet.convex.core.models/PaginationResult.continueCursor|{}continueCursor[0]
+        final fun <get-continueCursor>(): kotlin/String // io.github.androidpoet.convex.core.models/PaginationResult.continueCursor.<get-continueCursor>|<get-continueCursor>(){}[0]
+    final val isDone // io.github.androidpoet.convex.core.models/PaginationResult.isDone|{}isDone[0]
+        final fun <get-isDone>(): kotlin/Boolean // io.github.androidpoet.convex.core.models/PaginationResult.isDone.<get-isDone>|<get-isDone>(){}[0]
+    final val page // io.github.androidpoet.convex.core.models/PaginationResult.page|{}page[0]
+        final fun <get-page>(): kotlin.collections/List<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.core.models/PaginationResult.page.<get-page>|<get-page>(){}[0]
+
+    final fun component1(): kotlin.collections/List<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.core.models/PaginationResult.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.github.androidpoet.convex.core.models/PaginationResult.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // io.github.androidpoet.convex.core.models/PaginationResult.component3|component3(){}[0]
+    final fun copy(kotlin.collections/List<kotlinx.serialization.json/JsonElement> = ..., kotlin/String = ..., kotlin/Boolean = ...): io.github.androidpoet.convex.core.models/PaginationResult // io.github.androidpoet.convex.core.models/PaginationResult.copy|copy(kotlin.collections.List<kotlinx.serialization.json.JsonElement>;kotlin.String;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/PaginationResult.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/PaginationResult.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/PaginationResult.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/PaginationResult> { // io.github.androidpoet.convex.core.models/PaginationResult.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/PaginationResult.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/PaginationResult.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/PaginationResult.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/PaginationResult // io.github.androidpoet.convex.core.models/PaginationResult.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/PaginationResult) // io.github.androidpoet.convex.core.models/PaginationResult.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.PaginationResult){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/PaginationResult.Companion|null[0]
+        final val $childSerializers // io.github.androidpoet.convex.core.models/PaginationResult.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/PaginationResult> // io.github.androidpoet.convex.core.models/PaginationResult.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.models/UploadResponse { // io.github.androidpoet.convex.core.models/UploadResponse|null[0]
+    constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.models/UploadResponse.<init>|<init>(kotlin.String){}[0]
+
+    final val storageId // io.github.androidpoet.convex.core.models/UploadResponse.storageId|{}storageId[0]
+        final fun <get-storageId>(): kotlin/String // io.github.androidpoet.convex.core.models/UploadResponse.storageId.<get-storageId>|<get-storageId>(){}[0]
+
+    final fun component1(): kotlin/String // io.github.androidpoet.convex.core.models/UploadResponse.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.github.androidpoet.convex.core.models/UploadResponse // io.github.androidpoet.convex.core.models/UploadResponse.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.models/UploadResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.models/UploadResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.models/UploadResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.models/UploadResponse> { // io.github.androidpoet.convex.core.models/UploadResponse.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.models/UploadResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.models/UploadResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.models/UploadResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.models/UploadResponse // io.github.androidpoet.convex.core.models/UploadResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.models/UploadResponse) // io.github.androidpoet.convex.core.models/UploadResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.models.UploadResponse){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.models/UploadResponse.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.models/UploadResponse> // io.github.androidpoet.convex.core.models/UploadResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.core.result/ConvexError { // io.github.androidpoet.convex.core.result/ConvexError|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonElement?) // io.github.androidpoet.convex.core.result/ConvexError.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonElement?){}[0]
+
+    final val data // io.github.androidpoet.convex.core.result/ConvexError.data|{}data[0]
+        final fun <get-data>(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.result/ConvexError.data.<get-data>|<get-data>(){}[0]
+    final val message // io.github.androidpoet.convex.core.result/ConvexError.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.github.androidpoet.convex.core.result/ConvexError.message.<get-message>|<get-message>(){}[0]
+
+    final fun component1(): kotlin/String // io.github.androidpoet.convex.core.result/ConvexError.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonElement? // io.github.androidpoet.convex.core.result/ConvexError.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonElement? = ...): io.github.androidpoet.convex.core.result/ConvexError // io.github.androidpoet.convex.core.result/ConvexError.copy|copy(kotlin.String;kotlinx.serialization.json.JsonElement?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.result/ConvexError.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.result/ConvexError.hashCode|hashCode(){}[0]
+    final fun toException(): io.github.androidpoet.convex.core.result/ConvexException // io.github.androidpoet.convex.core.result/ConvexError.toException|toException(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.result/ConvexError.toString|toString(){}[0]
+}
+
+final class io.github.androidpoet.convex.core.result/ConvexException : kotlin/Exception { // io.github.androidpoet.convex.core.result/ConvexException|null[0]
+    constructor <init>(io.github.androidpoet.convex.core.result/ConvexError) // io.github.androidpoet.convex.core.result/ConvexException.<init>|<init>(io.github.androidpoet.convex.core.result.ConvexError){}[0]
+
+    final val error // io.github.androidpoet.convex.core.result/ConvexException.error|{}error[0]
+        final fun <get-error>(): io.github.androidpoet.convex.core.result/ConvexError // io.github.androidpoet.convex.core.result/ConvexException.error.<get-error>|<get-error>(){}[0]
+}
+
+final value class io.github.androidpoet.convex.core.types/DeploymentUrl { // io.github.androidpoet.convex.core.types/DeploymentUrl|null[0]
+    constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.types/DeploymentUrl.<init>|<init>(kotlin.String){}[0]
+
+    final val siteUrl // io.github.androidpoet.convex.core.types/DeploymentUrl.siteUrl|{}siteUrl[0]
+        final fun <get-siteUrl>(): kotlin/String // io.github.androidpoet.convex.core.types/DeploymentUrl.siteUrl.<get-siteUrl>|<get-siteUrl>(){}[0]
+    final val value // io.github.androidpoet.convex.core.types/DeploymentUrl.value|{}value[0]
+        final fun <get-value>(): kotlin/String // io.github.androidpoet.convex.core.types/DeploymentUrl.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.types/DeploymentUrl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.types/DeploymentUrl.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.types/DeploymentUrl.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.types/DeploymentUrl> { // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.types/DeploymentUrl // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.types/DeploymentUrl) // io.github.androidpoet.convex.core.types/DeploymentUrl.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.types.DeploymentUrl){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.types/DeploymentUrl.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.types/DeploymentUrl> // io.github.androidpoet.convex.core.types/DeploymentUrl.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final value class io.github.androidpoet.convex.core.types/DocumentId { // io.github.androidpoet.convex.core.types/DocumentId|null[0]
+    constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.types/DocumentId.<init>|<init>(kotlin.String){}[0]
+
+    final val value // io.github.androidpoet.convex.core.types/DocumentId.value|{}value[0]
+        final fun <get-value>(): kotlin/String // io.github.androidpoet.convex.core.types/DocumentId.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.types/DocumentId.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.types/DocumentId.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.types/DocumentId.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.types/DocumentId> { // io.github.androidpoet.convex.core.types/DocumentId.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.types/DocumentId.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.types/DocumentId.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.types/DocumentId.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.types/DocumentId // io.github.androidpoet.convex.core.types/DocumentId.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.types/DocumentId) // io.github.androidpoet.convex.core.types/DocumentId.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.types.DocumentId){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.types/DocumentId.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.types/DocumentId> // io.github.androidpoet.convex.core.types/DocumentId.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final value class io.github.androidpoet.convex.core.types/FunctionReference { // io.github.androidpoet.convex.core.types/FunctionReference|null[0]
+    constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.types/FunctionReference.<init>|<init>(kotlin.String){}[0]
+
+    final val value // io.github.androidpoet.convex.core.types/FunctionReference.value|{}value[0]
+        final fun <get-value>(): kotlin/String // io.github.androidpoet.convex.core.types/FunctionReference.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.types/FunctionReference.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.types/FunctionReference.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.types/FunctionReference.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.types/FunctionReference> { // io.github.androidpoet.convex.core.types/FunctionReference.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.types/FunctionReference.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.types/FunctionReference.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.types/FunctionReference.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.types/FunctionReference // io.github.androidpoet.convex.core.types/FunctionReference.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.types/FunctionReference) // io.github.androidpoet.convex.core.types/FunctionReference.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.types.FunctionReference){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.types/FunctionReference.Companion|null[0]
+        final fun of(kotlin/String, kotlin/String): io.github.androidpoet.convex.core.types/FunctionReference // io.github.androidpoet.convex.core.types/FunctionReference.Companion.of|of(kotlin.String;kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.types/FunctionReference> // io.github.androidpoet.convex.core.types/FunctionReference.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final value class io.github.androidpoet.convex.core.types/StorageId { // io.github.androidpoet.convex.core.types/StorageId|null[0]
+    constructor <init>(kotlin/String) // io.github.androidpoet.convex.core.types/StorageId.<init>|<init>(kotlin.String){}[0]
+
+    final val value // io.github.androidpoet.convex.core.types/StorageId.value|{}value[0]
+        final fun <get-value>(): kotlin/String // io.github.androidpoet.convex.core.types/StorageId.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.core.types/StorageId.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.core.types/StorageId.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.core.types/StorageId.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<io.github.androidpoet.convex.core.types/StorageId> { // io.github.androidpoet.convex.core.types/StorageId.$serializer|null[0]
+        final val descriptor // io.github.androidpoet.convex.core.types/StorageId.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.androidpoet.convex.core.types/StorageId.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // io.github.androidpoet.convex.core.types/StorageId.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.androidpoet.convex.core.types/StorageId // io.github.androidpoet.convex.core.types/StorageId.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.androidpoet.convex.core.types/StorageId) // io.github.androidpoet.convex.core.types/StorageId.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.androidpoet.convex.core.types.StorageId){}[0]
+    }
+
+    final object Companion { // io.github.androidpoet.convex.core.types/StorageId.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.androidpoet.convex.core.types/StorageId> // io.github.androidpoet.convex.core.types/StorageId.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final object io.github.androidpoet.convex.core.values/ConvexCodec { // io.github.androidpoet.convex.core.values/ConvexCodec|null[0]
+    final fun decode(kotlinx.serialization.json/JsonElement): io.github.androidpoet.convex.core.values/ConvexValue // io.github.androidpoet.convex.core.values/ConvexCodec.decode|decode(kotlinx.serialization.json.JsonElement){}[0]
+    final fun decodeToPlainJson(kotlinx.serialization.json/JsonElement): kotlinx.serialization.json/JsonElement // io.github.androidpoet.convex.core.values/ConvexCodec.decodeToPlainJson|decodeToPlainJson(kotlinx.serialization.json.JsonElement){}[0]
+    final fun encode(io.github.androidpoet.convex.core.values/ConvexValue): kotlinx.serialization.json/JsonElement // io.github.androidpoet.convex.core.values/ConvexCodec.encode|encode(io.github.androidpoet.convex.core.values.ConvexValue){}[0]
+}
+
+final fun (io.github.androidpoet.convex.core.values/ConvexValue).io.github.androidpoet.convex.core.values/toJsonElement(): kotlinx.serialization.json/JsonElement // io.github.androidpoet.convex.core.values/toJsonElement|toJsonElement@io.github.androidpoet.convex.core.values.ConvexValue(){}[0]
+final fun (kotlinx.serialization.json/JsonElement).io.github.androidpoet.convex.core.values/toConvexValue(): io.github.androidpoet.convex.core.values/ConvexValue // io.github.androidpoet.convex.core.values/toConvexValue|toConvexValue@kotlinx.serialization.json.JsonElement(){}[0]
+final fun io.github.androidpoet.convex.core.args/args(kotlin/Function1<io.github.androidpoet.convex.core.args/ArgsBuilder, kotlin/Unit>): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.args/args|args(kotlin.Function1<io.github.androidpoet.convex.core.args.ArgsBuilder,kotlin.Unit>){}[0]
+final fun io.github.androidpoet.convex.core.args/emptyArgs(): kotlinx.serialization.json/JsonObject // io.github.androidpoet.convex.core.args/emptyArgs|emptyArgs(){}[0]
+final fun io.github.androidpoet.convex.core.types/getFunctionName(io.github.androidpoet.convex.core.types/FunctionReference): kotlin/String // io.github.androidpoet.convex.core.types/getFunctionName|getFunctionName(io.github.androidpoet.convex.core.types.FunctionReference){}[0]
+final fun io.github.androidpoet.convex.core.types/makeFunctionReference(kotlin/String): io.github.androidpoet.convex.core.types/FunctionReference // io.github.androidpoet.convex.core.types/makeFunctionReference|makeFunctionReference(kotlin.String){}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/flatMap(kotlin/Function1<#A, io.github.androidpoet.convex.core.result/ConvexResult<#B>>): io.github.androidpoet.convex.core.result/ConvexResult<#B> // io.github.androidpoet.convex.core.result/flatMap|flatMap@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<0:0,io.github.androidpoet.convex.core.result.ConvexResult<0:1>>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/map(kotlin/Function1<#A, #B>): io.github.androidpoet.convex.core.result/ConvexResult<#B> // io.github.androidpoet.convex.core.result/map|map@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/getOrElse(kotlin/Function1<io.github.androidpoet.convex.core.result/ConvexError, #A>): #A // io.github.androidpoet.convex.core.result/getOrElse|getOrElse@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<io.github.androidpoet.convex.core.result.ConvexError,0:0>){0§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/onFailure(kotlin/Function1<io.github.androidpoet.convex.core.result/ConvexError, kotlin/Unit>): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.core.result/onFailure|onFailure@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<io.github.androidpoet.convex.core.result.ConvexError,kotlin.Unit>){0§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/onSuccess(kotlin/Function1<#A, kotlin/Unit>): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.core.result/onSuccess|onSuccess@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?> (io.github.androidpoet.convex.core.result/ConvexResult<#A>).io.github.androidpoet.convex.core.result/recover(kotlin/Function1<io.github.androidpoet.convex.core.result/ConvexError, #A>): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.core.result/recover|recover@io.github.androidpoet.convex.core.result.ConvexResult<0:0>(kotlin.Function1<io.github.androidpoet.convex.core.result.ConvexError,0:0>){0§<kotlin.Any?>}[0]

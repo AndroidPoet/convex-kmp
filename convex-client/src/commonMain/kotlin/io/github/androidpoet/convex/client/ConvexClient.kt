@@ -5,7 +5,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 public interface ConvexClient {
-
     public suspend fun query(
         path: String,
         args: JsonObject = JsonObject(emptyMap()),

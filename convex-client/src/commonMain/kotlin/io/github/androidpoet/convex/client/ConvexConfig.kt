@@ -12,11 +12,12 @@ public class ConvexConfigBuilder internal constructor(
     public var logging: Boolean = false
     public var logLevel: LogLevel = LogLevel.INFO
 
-    public fun build(): ConvexConfig = ConvexConfig(
-        deploymentUrl = DeploymentUrl(deploymentUrl),
-        logging = logging,
-        logLevel = logLevel,
-    )
+    public fun build(): ConvexConfig =
+        ConvexConfig(
+            deploymentUrl = DeploymentUrl(deploymentUrl),
+            logging = logging,
+            logLevel = logLevel,
+        )
 }
 
 public data class ConvexConfig(

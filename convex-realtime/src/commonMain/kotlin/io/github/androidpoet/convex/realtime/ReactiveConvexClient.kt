@@ -18,7 +18,6 @@ import kotlinx.serialization.json.JsonObject
  * server-side subscription.
  */
 public interface ReactiveConvexClient {
-
     /** The live connection state, mirroring `ConvexClient.connectionState()`. */
     public val connectionState: StateFlow<ConnectionState>
 

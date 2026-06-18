@@ -1,0 +1,50 @@
+---
+title: Convex KMP
+description: A type-safe, coroutine-first Kotlin Multiplatform client for Convex, running on Android, iOS, JVM Desktop and browser (Wasm).
+---
+
+import { Hero } from '../components/Hero'
+import { Cards } from 'nextra/components'
+
+<Hero />
+
+**Convex KMP** is a Kotlin Multiplatform SDK for [Convex](https://convex.dev). You write one
+call site in `commonMain` to run queries, mutations and actions against your deployment, and
+the same code runs on Android, iOS, JVM Desktop and the browser (Wasm) — each on its own native
+Ktor engine.
+
+```kotlin
+val convex = createConvexClient(
+    ConvexConfig(DeploymentUrl("https://your-app.convex.cloud")),
+)
+
+when (val result = convex.query("messages:list", args { "channel" to "#general" })) {
+    is ConvexResult.Success -> render(result.value)
+    is ConvexResult.Failure -> handle(result.error.message)
+}
+```
+
+## Why Convex KMP
+
+- **One API, every Kotlin target.** No per-platform networking glue — `commonMain` talks to
+  Convex on Android (OkHttp), iOS (Darwin), JVM Desktop (OkHttp) and Wasm (Js).
+- **Result-first, no exceptions for control flow.** Every call returns a `ConvexResult<T>` you
+  exhaustively `when` over, with `map` / `flatMap` / `recover` combinators.
+- **Type-safe by design.** Value classes — `DocumentId`, `StorageId`, `FunctionReference` —
+  stop you passing the wrong id, and `queryTyped<T>()` decodes straight into your data classes.
+- **Args DSL, not raw JSON.** Build function arguments with a small Kotlin builder instead of
+  hand-assembling `JsonObject`s.
+- **Modular.** Take only what you need: `convex-core`, `convex-client`, `convex-storage`,
+  `convex-realtime`.
+- **Dual auth.** Bearer tokens for end-user JWTs and admin auth for deploy keys.
+
+## Explore the docs
+
+<Cards>
+  <Cards.Card title="Getting Started" href="/getting-started" arrow />
+  <Cards.Card title="Queries & Mutations" href="/queries-and-mutations" arrow />
+  <Cards.Card title="Results & Errors" href="/results-and-errors" arrow />
+  <Cards.Card title="Realtime" href="/realtime" arrow />
+  <Cards.Card title="File Storage" href="/storage" arrow />
+  <Cards.Card title="Platforms" href="/platforms" arrow />
+</Cards>

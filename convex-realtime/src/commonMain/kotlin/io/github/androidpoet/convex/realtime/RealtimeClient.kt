@@ -11,7 +11,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 public interface RealtimeClient {
-
     public fun subscribe(
         path: String,
         args: JsonObject = JsonObject(emptyMap()),
@@ -24,17 +23,17 @@ public interface RealtimeClient {
 internal class PollingRealtimeClient(
     private val client: ConvexClient,
 ) : RealtimeClient {
-
     override fun subscribe(
         path: String,
         args: JsonObject,
         intervalMs: Long,
-    ): Flow<ConvexResult<JsonElement>> = flow {
-        while (currentCoroutineContext().isActive) {
-            emit(client.query(path, args))
-            delay(intervalMs)
+    ): Flow<ConvexResult<JsonElement>> =
+        flow {
+            while (currentCoroutineContext().isActive) {
+                emit(client.query(path, args))
+                delay(intervalMs)
+            }
         }
-    }
 
     override fun close() {
         // No persistent connection to close in polling mode

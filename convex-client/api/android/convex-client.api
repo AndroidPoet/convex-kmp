@@ -1,0 +1,112 @@
+public final class io/github/androidpoet/convex/client/Convex {
+	public static final field INSTANCE Lio/github/androidpoet/convex/client/Convex;
+	public final fun create (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/github/androidpoet/convex/client/ConvexClient;
+	public static synthetic fun create$default (Lio/github/androidpoet/convex/client/Convex;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/androidpoet/convex/client/ConvexClient;
+}
+
+public abstract interface class io/github/androidpoet/convex/client/ConvexClient {
+	public abstract fun action (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun clearAuth ()V
+	public abstract fun close ()V
+	public abstract fun consistentQuery (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun mutation (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun postRaw (Ljava/lang/String;[BLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun query (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setAdminAuth (Ljava/lang/String;)V
+	public abstract fun setAuth (Ljava/lang/String;)V
+}
+
+public final class io/github/androidpoet/convex/client/ConvexClient$DefaultImpls {
+	public static synthetic fun action$default (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun consistentQuery$default (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun mutation$default (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun query$default (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/client/ConvexClientExtKt {
+	public static final fun queryPaginated (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lio/github/androidpoet/convex/core/models/PaginationOpts;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun queryPaginated$default (Lio/github/androidpoet/convex/client/ConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lio/github/androidpoet/convex/core/models/PaginationOpts;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/client/ConvexConfig {
+	public synthetic fun <init> (Ljava/lang/String;ZLio/github/androidpoet/convex/client/LogLevel;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;ZLio/github/androidpoet/convex/client/LogLevel;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-sTG7YFI ()Ljava/lang/String;
+	public final fun component2 ()Z
+	public final fun component3 ()Lio/github/androidpoet/convex/client/LogLevel;
+	public final fun copy-_BMPNX4 (Ljava/lang/String;ZLio/github/androidpoet/convex/client/LogLevel;)Lio/github/androidpoet/convex/client/ConvexConfig;
+	public static synthetic fun copy-_BMPNX4$default (Lio/github/androidpoet/convex/client/ConvexConfig;Ljava/lang/String;ZLio/github/androidpoet/convex/client/LogLevel;ILjava/lang/Object;)Lio/github/androidpoet/convex/client/ConvexConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeploymentUrl-sTG7YFI ()Ljava/lang/String;
+	public final fun getLogLevel ()Lio/github/androidpoet/convex/client/LogLevel;
+	public final fun getLogging ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/androidpoet/convex/client/ConvexConfigBuilder {
+	public final fun build ()Lio/github/androidpoet/convex/client/ConvexConfig;
+	public final fun getLogLevel ()Lio/github/androidpoet/convex/client/LogLevel;
+	public final fun getLogging ()Z
+	public final fun setLogLevel (Lio/github/androidpoet/convex/client/LogLevel;)V
+	public final fun setLogging (Z)V
+}
+
+public abstract interface annotation class io/github/androidpoet/convex/client/ConvexConfigDsl : java/lang/annotation/Annotation {
+}
+
+public final class io/github/androidpoet/convex/client/ConvexFactoryKt {
+	public static final fun createConvexClient (Lio/github/androidpoet/convex/client/ConvexConfig;)Lio/github/androidpoet/convex/client/ConvexClient;
+}
+
+public final class io/github/androidpoet/convex/client/LogLevel : java/lang/Enum {
+	public static final field ALL Lio/github/androidpoet/convex/client/LogLevel;
+	public static final field BODY Lio/github/androidpoet/convex/client/LogLevel;
+	public static final field HEADERS Lio/github/androidpoet/convex/client/LogLevel;
+	public static final field INFO Lio/github/androidpoet/convex/client/LogLevel;
+	public static final field NONE Lio/github/androidpoet/convex/client/LogLevel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/androidpoet/convex/client/LogLevel;
+	public static fun values ()[Lio/github/androidpoet/convex/client/LogLevel;
+}
+
+public abstract interface class io/github/androidpoet/convex/client/auth/AuthState {
+	public abstract fun headerValue ()Ljava/lang/String;
+}
+
+public final class io/github/androidpoet/convex/client/auth/AuthState$Admin : io/github/androidpoet/convex/client/auth/AuthState {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/androidpoet/convex/client/auth/AuthState$Admin;
+	public static synthetic fun copy$default (Lio/github/androidpoet/convex/client/auth/AuthState$Admin;Ljava/lang/String;ILjava/lang/Object;)Lio/github/androidpoet/convex/client/auth/AuthState$Admin;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeployKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun headerValue ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/androidpoet/convex/client/auth/AuthState$Bearer : io/github/androidpoet/convex/client/auth/AuthState {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/androidpoet/convex/client/auth/AuthState$Bearer;
+	public static synthetic fun copy$default (Lio/github/androidpoet/convex/client/auth/AuthState$Bearer;Ljava/lang/String;ILjava/lang/Object;)Lio/github/androidpoet/convex/client/auth/AuthState$Bearer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun headerValue ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/androidpoet/convex/client/auth/AuthState$DefaultImpls {
+	public static fun headerValue (Lio/github/androidpoet/convex/client/auth/AuthState;)Ljava/lang/String;
+}
+
+public final class io/github/androidpoet/convex/client/auth/AuthState$None : io/github/androidpoet/convex/client/auth/AuthState {
+	public static final field INSTANCE Lio/github/androidpoet/convex/client/auth/AuthState$None;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun headerValue ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+

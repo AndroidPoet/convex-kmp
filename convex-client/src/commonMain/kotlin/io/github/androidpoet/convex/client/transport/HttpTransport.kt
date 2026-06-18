@@ -23,7 +23,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 internal class HttpTransport(
@@ -32,31 +31,33 @@ internal class HttpTransport(
 ) {
     private var authState: AuthState = AuthState.None
 
-    internal val json: Json = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-        encodeDefaults = true
-        explicitNulls = false
-    }
-
-    internal val httpClient: HttpClient = HttpClient(engine) {
-        install(ContentNegotiation) {
-            json(json)
+    internal val json: Json =
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+            encodeDefaults = true
+            explicitNulls = false
         }
 
-        if (config.logging) {
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = config.logLevel.toKtorLevel()
+    internal val httpClient: HttpClient =
+        HttpClient(engine) {
+            install(ContentNegotiation) {
+                json(json)
+            }
+
+            if (config.logging) {
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                    level = config.logLevel.toKtorLevel()
+                }
+            }
+
+            defaultRequest {
+                url(config.deploymentUrl.value.trimEnd('/') + "/")
+                contentType(ContentType.Application.Json)
+                header("Convex-Client", "kotlin-${SDK_VERSION}")
             }
         }
-
-        defaultRequest {
-            url(config.deploymentUrl.value.trimEnd('/') + "/")
-            contentType(ContentType.Application.Json)
-            header("Convex-Client", "kotlin-${SDK_VERSION}")
-        }
-    }
 
     private var consistencyTs: Long? = null
 
@@ -72,10 +73,11 @@ internal class HttpTransport(
         args: JsonObject,
     ): ConvexResponse {
         val request = FunctionRequest(path = path, args = args)
-        val response = httpClient.post(endpoint) {
-            authState.headerValue()?.let { header("Authorization", it) }
-            setBody(request)
-        }
+        val response =
+            httpClient.post(endpoint) {
+                authState.headerValue()?.let { header("Authorization", it) }
+                setBody(request)
+            }
         return parseResponse(response)
     }
 
@@ -90,10 +92,11 @@ internal class HttpTransport(
     ): ConvexResponse {
         val endpoint = if (consistencyTs == null) "api/query_ts" else "api/query_at_ts"
         val request = ConsistentQueryRequest(path = path, args = args, ts = consistencyTs)
-        val response = httpClient.post(endpoint) {
-            authState.headerValue()?.let { header("Authorization", it) }
-            setBody(request)
-        }
+        val response =
+            httpClient.post(endpoint) {
+                authState.headerValue()?.let { header("Authorization", it) }
+                setBody(request)
+            }
         val parsed = parseResponse(response)
         parsed.ts?.let { consistencyTs = it }
         return parsed
@@ -118,11 +121,12 @@ internal class HttpTransport(
         body: ByteArray,
         contentType: String,
     ): String {
-        val response = httpClient.post(url) {
-            authState.headerValue()?.let { header("Authorization", it) }
-            contentType(ContentType.parse(contentType))
-            setBody(body)
-        }
+        val response =
+            httpClient.post(url) {
+                authState.headerValue()?.let { header("Authorization", it) }
+                contentType(ContentType.parse(contentType))
+                setBody(body)
+            }
         return response.bodyAsText()
     }
 
@@ -135,10 +139,11 @@ internal class HttpTransport(
     }
 }
 
-private fun LogLevel.toKtorLevel(): io.ktor.client.plugins.logging.LogLevel = when (this) {
-    LogLevel.ALL -> io.ktor.client.plugins.logging.LogLevel.ALL
-    LogLevel.HEADERS -> io.ktor.client.plugins.logging.LogLevel.HEADERS
-    LogLevel.BODY -> io.ktor.client.plugins.logging.LogLevel.BODY
-    LogLevel.INFO -> io.ktor.client.plugins.logging.LogLevel.INFO
-    LogLevel.NONE -> io.ktor.client.plugins.logging.LogLevel.NONE
-}
+private fun LogLevel.toKtorLevel(): io.ktor.client.plugins.logging.LogLevel =
+    when (this) {
+        LogLevel.ALL -> io.ktor.client.plugins.logging.LogLevel.ALL
+        LogLevel.HEADERS -> io.ktor.client.plugins.logging.LogLevel.HEADERS
+        LogLevel.BODY -> io.ktor.client.plugins.logging.LogLevel.BODY
+        LogLevel.INFO -> io.ktor.client.plugins.logging.LogLevel.INFO
+        LogLevel.NONE -> io.ktor.client.plugins.logging.LogLevel.NONE
+    }

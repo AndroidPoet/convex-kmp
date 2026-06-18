@@ -1,0 +1,70 @@
+---
+title: Results & Errors
+description: How ConvexResult models success and failure, and how to handle ConvexError without exceptions.
+---
+
+import { Callout } from 'nextra/components'
+
+# Results & Errors
+
+Convex KMP never throws across an API boundary for control flow. Every call returns a
+`ConvexResult<T>` — a sealed interface with exactly two cases.
+
+```kotlin
+public sealed interface ConvexResult<out T> {
+    public data class Success<T>(val value: T) : ConvexResult<T>
+    public data class Failure(val error: ConvexError) : ConvexResult<Nothing>
+}
+```
+
+Because it's sealed, an exhaustive `when` forces you to handle the failure case:
+
+```kotlin
+when (val result = convex.query("messages:list", emptyArgs())) {
+    is ConvexResult.Success -> render(result.value)
+    is ConvexResult.Failure -> showError(result.error.message)
+}
+```
+
+## ConvexError
+
+A failure carries a `ConvexError` with a human-readable `message` and an optional structured
+`data` payload (the value your Convex function threw, as JSON).
+
+```kotlin
+public data class ConvexError(
+    val message: String,
+    val data: JsonElement?,
+)
+```
+
+You can convert it to a throwable with `error.toException()` when you need to bridge into
+exception-based code.
+
+## Combinators
+
+`ConvexResult` is a small monad — transform and recover without unwrapping:
+
+```kotlin
+val title: ConvexResult<String> =
+    convex.queryTyped<Message>("messages:get", args { "id" to id })
+        .map { it.body.take(40) }            // transform Success
+        .recover { "(failed to load)" }      // turn Failure into a fallback Success
+
+// Side-effecting handlers
+result
+    .onSuccess { data -> cache(data) }
+    .onFailure { err -> log(err.message) }
+
+// Unwrapping
+val value = result.getOrElse { defaultMessage }
+val maybe = result.getOrNull()
+```
+
+`flatMap` chains a second call that itself returns a `ConvexResult`, short-circuiting on the
+first failure.
+
+<Callout type="warning">
+  `getOrThrow()` exists for convenience but throws `ConvexException` on failure — prefer the
+  `when` / `getOrElse` forms in shared code so failures stay explicit.
+</Callout>

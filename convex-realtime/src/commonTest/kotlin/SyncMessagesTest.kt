@@ -16,14 +16,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SyncMessagesTest {
-
-    private val json = Json {
-        classDiscriminator = "type"
-        ignoreUnknownKeys = true
-        isLenient = true
-        encodeDefaults = true
-        explicitNulls = false
-    }
+    private val json =
+        Json {
+            classDiscriminator = "type"
+            ignoreUnknownKeys = true
+            isLenient = true
+            encodeDefaults = true
+            explicitNulls = false
+        }
 
     @Test
     fun connect_serializes_with_type_discriminator() {
@@ -35,13 +35,15 @@ class SyncMessagesTest {
 
     @Test
     fun modify_query_set_carries_add_modifications() {
-        val message: ClientMessage = ModifyQuerySet(
-            baseVersion = 0,
-            newVersion = 1,
-            modifications = listOf(
-                AddQuery(queryId = 0, udfPath = "messages:list", args = listOf(JsonObject(emptyMap()))),
-            ),
-        )
+        val message: ClientMessage =
+            ModifyQuerySet(
+                baseVersion = 0,
+                newVersion = 1,
+                modifications =
+                    listOf(
+                        AddQuery(queryId = 0, udfPath = "messages:list", args = listOf(JsonObject(emptyMap()))),
+                    ),
+            )
         val obj = json.parseToJsonElement(json.encodeToString(ClientMessage.serializer(), message)).jsonObject
         assertEquals("ModifyQuerySet", obj.getValue("type").jsonPrimitive.content)
         val mod = obj.getValue("modifications").let { (it as kotlinx.serialization.json.JsonArray)[0] }.jsonObject
@@ -51,32 +53,47 @@ class SyncMessagesTest {
 
     @Test
     fun mutation_message_wraps_args_in_array() {
-        val message: ClientMessage = MutationMessage(
-            requestId = 7,
-            udfPath = "messages:send",
-            args = listOf(JsonObject(mapOf("body" to JsonPrimitive("hi")))),
-        )
+        val message: ClientMessage =
+            MutationMessage(
+                requestId = 7,
+                udfPath = "messages:send",
+                args = listOf(JsonObject(mapOf("body" to JsonPrimitive("hi")))),
+            )
         val obj = json.parseToJsonElement(json.encodeToString(ClientMessage.serializer(), message)).jsonObject
         assertEquals("Mutation", obj.getValue("type").jsonPrimitive.content)
         val args = obj.getValue("args") as kotlinx.serialization.json.JsonArray
         assertEquals(1, args.size)
-        assertEquals("hi", args[0].jsonObject.getValue("body").jsonPrimitive.content)
+        assertEquals(
+            "hi",
+            args[0]
+                .jsonObject
+                .getValue("body")
+                .jsonPrimitive.content,
+        )
     }
 
     @Test
     fun transition_deserializes_query_updated() {
-        val wire = """
+        val wire =
+            """
             {"type":"Transition",
              "startVersion":{"querySet":0,"ts":0,"identity":0},
              "endVersion":{"querySet":1,"ts":1000,"identity":0},
              "modifications":[{"type":"QueryUpdated","queryId":0,"value":{"count":5},"logLines":[]}]}
-        """.trimIndent()
+            """.trimIndent()
         val message = json.decodeFromString(ServerMessage.serializer(), wire)
         assertTrue(message is Transition)
         val mod = message.modifications.single()
         assertTrue(mod is QueryUpdated)
         assertEquals(0, mod.queryId)
-        assertEquals(5, mod.value!!.jsonObject.getValue("count").jsonPrimitive.content.toInt())
+        assertEquals(
+            5,
+            mod.value!!
+                .jsonObject
+                .getValue("count")
+                .jsonPrimitive.content
+                .toInt(),
+        )
     }
 
     @Test

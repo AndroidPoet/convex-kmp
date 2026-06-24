@@ -1,25 +1,31 @@
 package io.github.androidpoet.convex.core.result
 
 public sealed interface ConvexResult<out T> {
+    public data class Success<T>(
+        val value: T,
+    ) : ConvexResult<T>
 
-    public data class Success<T>(val value: T) : ConvexResult<T>
+    public data class Failure(
+        val error: ConvexError,
+    ) : ConvexResult<Nothing>
 
-    public data class Failure(val error: ConvexError) : ConvexResult<Nothing>
+    public fun getOrNull(): T? =
+        when (this) {
+            is Success -> value
+            is Failure -> null
+        }
 
-    public fun getOrNull(): T? = when (this) {
-        is Success -> value
-        is Failure -> null
-    }
+    public fun getOrThrow(): T =
+        when (this) {
+            is Success -> value
+            is Failure -> throw error.toException()
+        }
 
-    public fun getOrThrow(): T = when (this) {
-        is Success -> value
-        is Failure -> throw error.toException()
-    }
-
-    public fun errorOrNull(): ConvexError? = when (this) {
-        is Success -> null
-        is Failure -> error
-    }
+    public fun errorOrNull(): ConvexError? =
+        when (this) {
+            is Success -> null
+            is Failure -> error
+        }
 
     public val isSuccess: Boolean get() = this is Success
     public val isFailure: Boolean get() = this is Failure

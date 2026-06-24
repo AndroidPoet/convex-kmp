@@ -8,8 +8,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.double
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -30,31 +28,32 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  */
 @OptIn(ExperimentalEncodingApi::class)
 public object ConvexCodec {
-
     private const val KEY_INTEGER = "\$integer"
     private const val KEY_FLOAT = "\$float"
     private const val KEY_BYTES = "\$bytes"
     private const val KEY_UNDEFINED = "\$undefined"
 
     /** Encodes a [ConvexValue] into its `convex_encoded_json` [JsonElement]. */
-    public fun encode(value: ConvexValue): JsonElement = when (value) {
-        is ConvexValue.Null -> JsonNull
-        is ConvexValue.Bool -> JsonPrimitive(value.value)
-        is ConvexValue.Str -> JsonPrimitive(value.value)
-        is ConvexValue.Int64 -> wrap(KEY_INTEGER, Base64.encode(longToLeBytes(value.value)))
-        is ConvexValue.Float64 -> encodeFloat(value.value)
-        is ConvexValue.Bytes -> wrap(KEY_BYTES, Base64.encode(value.value))
-        is ConvexValue.Arr -> JsonArray(value.value.map { encode(it) })
-        is ConvexValue.Obj -> JsonObject(value.value.mapValues { encode(it.value) })
-    }
+    public fun encode(value: ConvexValue): JsonElement =
+        when (value) {
+            is ConvexValue.Null -> JsonNull
+            is ConvexValue.Bool -> JsonPrimitive(value.value)
+            is ConvexValue.Str -> JsonPrimitive(value.value)
+            is ConvexValue.Int64 -> wrap(KEY_INTEGER, Base64.encode(longToLeBytes(value.value)))
+            is ConvexValue.Float64 -> encodeFloat(value.value)
+            is ConvexValue.Bytes -> wrap(KEY_BYTES, Base64.encode(value.value))
+            is ConvexValue.Arr -> JsonArray(value.value.map { encode(it) })
+            is ConvexValue.Obj -> JsonObject(value.value.mapValues { encode(it.value) })
+        }
 
     /** Decodes a `convex_encoded_json` [JsonElement] into a [ConvexValue]. */
-    public fun decode(json: JsonElement): ConvexValue = when (json) {
-        is JsonNull -> ConvexValue.Null
-        is JsonArray -> ConvexValue.Arr(json.map { decode(it) })
-        is JsonObject -> decodeObject(json)
-        is JsonPrimitive -> decodePrimitive(json)
-    }
+    public fun decode(json: JsonElement): ConvexValue =
+        when (json) {
+            is JsonNull -> ConvexValue.Null
+            is JsonArray -> ConvexValue.Arr(json.map { decode(it) })
+            is JsonObject -> decodeObject(json)
+            is JsonPrimitive -> decodePrimitive(json)
+        }
 
     /**
      * Recursively rewrites a `convex_encoded_json` [JsonElement] into plain JSON,
@@ -62,21 +61,23 @@ public object ConvexCodec {
      * `$integer` -> JSON number, `$float` -> JSON number, `$bytes` -> base64 string,
      * `$undefined` -> `null`. Plain JSON passes through unchanged.
      */
-    public fun decodeToPlainJson(json: JsonElement): JsonElement = when (json) {
-        is JsonNull -> JsonNull
-        is JsonArray -> JsonArray(json.map { decodeToPlainJson(it) })
-        is JsonObject -> when {
-            json.containsSpecialKey(KEY_INTEGER) ->
-                JsonPrimitive(leBytesToLong(Base64.decode(json.specialString(KEY_INTEGER))))
-            json.containsSpecialKey(KEY_FLOAT) ->
-                JsonPrimitive(leBytesToDouble(Base64.decode(json.specialString(KEY_FLOAT))))
-            json.containsSpecialKey(KEY_BYTES) ->
-                JsonPrimitive(json.specialString(KEY_BYTES))
-            json.containsSpecialKey(KEY_UNDEFINED) -> JsonNull
-            else -> JsonObject(json.mapValues { decodeToPlainJson(it.value) })
+    public fun decodeToPlainJson(json: JsonElement): JsonElement =
+        when (json) {
+            is JsonNull -> JsonNull
+            is JsonArray -> JsonArray(json.map { decodeToPlainJson(it) })
+            is JsonObject ->
+                when {
+                    json.containsSpecialKey(KEY_INTEGER) ->
+                        JsonPrimitive(leBytesToLong(Base64.decode(json.specialString(KEY_INTEGER))))
+                    json.containsSpecialKey(KEY_FLOAT) ->
+                        JsonPrimitive(leBytesToDouble(Base64.decode(json.specialString(KEY_FLOAT))))
+                    json.containsSpecialKey(KEY_BYTES) ->
+                        JsonPrimitive(json.specialString(KEY_BYTES))
+                    json.containsSpecialKey(KEY_UNDEFINED) -> JsonNull
+                    else -> JsonObject(json.mapValues { decodeToPlainJson(it.value) })
+                }
+            is JsonPrimitive -> json
         }
-        is JsonPrimitive -> json
-    }
 
     private fun encodeFloat(d: Double): JsonElement =
         if (d.isFinite() && !isNegativeZero(d)) {
@@ -85,24 +86,26 @@ public object ConvexCodec {
             wrap(KEY_FLOAT, Base64.encode(longToLeBytes(d.toRawBits())))
         }
 
-    private fun decodeObject(json: JsonObject): ConvexValue = when {
-        json.containsSpecialKey(KEY_INTEGER) ->
-            ConvexValue.Int64(leBytesToLong(Base64.decode(json.specialString(KEY_INTEGER))))
-        json.containsSpecialKey(KEY_FLOAT) ->
-            ConvexValue.Float64(leBytesToDouble(Base64.decode(json.specialString(KEY_FLOAT))))
-        json.containsSpecialKey(KEY_BYTES) ->
-            ConvexValue.Bytes(Base64.decode(json.specialString(KEY_BYTES)))
-        json.containsSpecialKey(KEY_UNDEFINED) -> ConvexValue.Null
-        else -> ConvexValue.Obj(json.mapValues { decode(it.value) })
-    }
+    private fun decodeObject(json: JsonObject): ConvexValue =
+        when {
+            json.containsSpecialKey(KEY_INTEGER) ->
+                ConvexValue.Int64(leBytesToLong(Base64.decode(json.specialString(KEY_INTEGER))))
+            json.containsSpecialKey(KEY_FLOAT) ->
+                ConvexValue.Float64(leBytesToDouble(Base64.decode(json.specialString(KEY_FLOAT))))
+            json.containsSpecialKey(KEY_BYTES) ->
+                ConvexValue.Bytes(Base64.decode(json.specialString(KEY_BYTES)))
+            json.containsSpecialKey(KEY_UNDEFINED) -> ConvexValue.Null
+            else -> ConvexValue.Obj(json.mapValues { decode(it.value) })
+        }
 
-    private fun decodePrimitive(primitive: JsonPrimitive): ConvexValue = when {
-        primitive.isString -> ConvexValue.Str(primitive.content)
-        primitive.booleanOrNull != null -> ConvexValue.Bool(primitive.boolean)
-        // Bare JSON numbers are always Float64 on the Convex wire; Int64 only
-        // ever arrives wrapped in `$integer`.
-        else -> ConvexValue.Float64(primitive.double)
-    }
+    private fun decodePrimitive(primitive: JsonPrimitive): ConvexValue =
+        when {
+            primitive.isString -> ConvexValue.Str(primitive.content)
+            primitive.booleanOrNull != null -> ConvexValue.Bool(primitive.boolean)
+            // Bare JSON numbers are always Float64 on the Convex wire; Int64 only
+            // ever arrives wrapped in `$integer`.
+            else -> ConvexValue.Float64(primitive.double)
+        }
 
     private fun wrap(key: String, base64: String): JsonObject =
         JsonObject(mapOf(key to JsonPrimitive(base64)))

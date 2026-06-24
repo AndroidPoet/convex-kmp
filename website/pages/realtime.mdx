@@ -1,0 +1,53 @@
+---
+title: Realtime
+description: Subscribe to Convex queries as Kotlin Flows that re-emit when the data changes.
+---
+
+import { Callout } from 'nextra/components'
+
+# Realtime Subscriptions
+
+The `convex-realtime` module turns a Convex query into a `Flow` that re-emits whenever the
+underlying result changes, so your UI stays live without manual refetching.
+
+## Subscribe
+
+Create a realtime client from an existing `ConvexClient`, then `subscribe` to a query path. Each
+emission is a `ConvexResult`, so transient errors don't tear down the stream.
+
+```kotlin
+val realtime = createRealtimeClient(convex)
+
+realtime
+    .subscribe("messages:list", args { "channel" to "#general" })
+    .collect { result ->
+        result.onSuccess { messages -> render(messages) }
+    }
+```
+
+## In a coroutine scope
+
+Collect inside the scope that owns the screen so the subscription is cancelled with it:
+
+```kotlin
+scope.launch {
+    realtime
+        .subscribe("messages:list", args { "channel" to "#general" })
+        .collect { result ->
+            when (result) {
+                is ConvexResult.Success -> uiState = uiState.copy(messages = result.value)
+                is ConvexResult.Failure -> uiState = uiState.copy(error = result.error.message)
+            }
+        }
+}
+```
+
+<Callout type="info">
+  The realtime client maintains its own connection. Build it once per deployment and share it,
+  rather than creating one per subscription.
+</Callout>
+
+## When to use it
+
+- **Use realtime** for data the user watches change — feeds, presence, collaborative state.
+- **Use a one-shot [query](/queries-and-mutations)** for data you fetch once on demand.

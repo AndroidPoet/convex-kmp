@@ -1,0 +1,43 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <convex-kmp:convex-realtime>
+open annotation class io.github.androidpoet.convex.realtime/ReactiveConfigDsl : kotlin/Annotation { // io.github.androidpoet.convex.realtime/ReactiveConfigDsl|null[0]
+    constructor <init>() // io.github.androidpoet.convex.realtime/ReactiveConfigDsl.<init>|<init>(){}[0]
+}
+
+abstract interface io.github.androidpoet.convex.realtime/ReactiveConvexClient { // io.github.androidpoet.convex.realtime/ReactiveConvexClient|null[0]
+    abstract val connectionState // io.github.androidpoet.convex.realtime/ReactiveConvexClient.connectionState|{}connectionState[0]
+        abstract fun <get-connectionState>(): kotlinx.coroutines.flow/StateFlow<io.github.androidpoet.convex.core.models/ConnectionState> // io.github.androidpoet.convex.realtime/ReactiveConvexClient.connectionState.<get-connectionState>|<get-connectionState>(){}[0]
+
+    abstract fun close() // io.github.androidpoet.convex.realtime/ReactiveConvexClient.close|close(){}[0]
+    abstract fun onUpdate(kotlin/String, kotlinx.serialization.json/JsonObject = ...): kotlinx.coroutines.flow/Flow<io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement>> // io.github.androidpoet.convex.realtime/ReactiveConvexClient.onUpdate|onUpdate(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract fun setAuth(kotlin/String?) // io.github.androidpoet.convex.realtime/ReactiveConvexClient.setAuth|setAuth(kotlin.String?){}[0]
+    abstract suspend fun action(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.realtime/ReactiveConvexClient.action|action(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun mutation(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.realtime/ReactiveConvexClient.mutation|mutation(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun query(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.realtime/ReactiveConvexClient.query|query(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+}
+
+abstract interface io.github.androidpoet.convex.realtime/RealtimeClient { // io.github.androidpoet.convex.realtime/RealtimeClient|null[0]
+    abstract fun close() // io.github.androidpoet.convex.realtime/RealtimeClient.close|close(){}[0]
+    abstract fun subscribe(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlin/Long = ...): kotlinx.coroutines.flow/Flow<io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement>> // io.github.androidpoet.convex.realtime/RealtimeClient.subscribe|subscribe(kotlin.String;kotlinx.serialization.json.JsonObject;kotlin.Long){}[0]
+}
+
+final class io.github.androidpoet.convex.realtime/ReactiveConfigBuilder { // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder|null[0]
+    final var reconnectInitialDelayMs // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectInitialDelayMs|{}reconnectInitialDelayMs[0]
+        final fun <get-reconnectInitialDelayMs>(): kotlin/Long // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectInitialDelayMs.<get-reconnectInitialDelayMs>|<get-reconnectInitialDelayMs>(){}[0]
+        final fun <set-reconnectInitialDelayMs>(kotlin/Long) // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectInitialDelayMs.<set-reconnectInitialDelayMs>|<set-reconnectInitialDelayMs>(kotlin.Long){}[0]
+    final var reconnectMaxDelayMs // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectMaxDelayMs|{}reconnectMaxDelayMs[0]
+        final fun <get-reconnectMaxDelayMs>(): kotlin/Long // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectMaxDelayMs.<get-reconnectMaxDelayMs>|<get-reconnectMaxDelayMs>(){}[0]
+        final fun <set-reconnectMaxDelayMs>(kotlin/Long) // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.reconnectMaxDelayMs.<set-reconnectMaxDelayMs>|<set-reconnectMaxDelayMs>(kotlin.Long){}[0]
+    final var syncPath // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.syncPath|{}syncPath[0]
+        final fun <get-syncPath>(): kotlin/String // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.syncPath.<get-syncPath>|<get-syncPath>(){}[0]
+        final fun <set-syncPath>(kotlin/String) // io.github.androidpoet.convex.realtime/ReactiveConfigBuilder.syncPath.<set-syncPath>|<set-syncPath>(kotlin.String){}[0]
+}
+
+final fun io.github.androidpoet.convex.realtime/createReactiveClient(kotlin/String, kotlin/Function1<io.github.androidpoet.convex.realtime/ReactiveConfigBuilder, kotlin/Unit> = ...): io.github.androidpoet.convex.realtime/ReactiveConvexClient // io.github.androidpoet.convex.realtime/createReactiveClient|createReactiveClient(kotlin.String;kotlin.Function1<io.github.androidpoet.convex.realtime.ReactiveConfigBuilder,kotlin.Unit>){}[0]
+final fun io.github.androidpoet.convex.realtime/createRealtimeClient(io.github.androidpoet.convex.client/ConvexClient): io.github.androidpoet.convex.realtime/RealtimeClient // io.github.androidpoet.convex.realtime/createRealtimeClient|createRealtimeClient(io.github.androidpoet.convex.client.ConvexClient){}[0]

@@ -8,7 +8,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class IdsTest {
-
     @Test
     fun documentId_wrapsString() {
         val id = DocumentId("abc123")

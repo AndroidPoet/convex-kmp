@@ -1,0 +1,113 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <convex-kmp:convex-client>
+open annotation class io.github.androidpoet.convex.client/ConvexConfigDsl : kotlin/Annotation { // io.github.androidpoet.convex.client/ConvexConfigDsl|null[0]
+    constructor <init>() // io.github.androidpoet.convex.client/ConvexConfigDsl.<init>|<init>(){}[0]
+}
+
+final enum class io.github.androidpoet.convex.client/LogLevel : kotlin/Enum<io.github.androidpoet.convex.client/LogLevel> { // io.github.androidpoet.convex.client/LogLevel|null[0]
+    enum entry ALL // io.github.androidpoet.convex.client/LogLevel.ALL|null[0]
+    enum entry BODY // io.github.androidpoet.convex.client/LogLevel.BODY|null[0]
+    enum entry HEADERS // io.github.androidpoet.convex.client/LogLevel.HEADERS|null[0]
+    enum entry INFO // io.github.androidpoet.convex.client/LogLevel.INFO|null[0]
+    enum entry NONE // io.github.androidpoet.convex.client/LogLevel.NONE|null[0]
+
+    final val entries // io.github.androidpoet.convex.client/LogLevel.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.androidpoet.convex.client/LogLevel> // io.github.androidpoet.convex.client/LogLevel.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.androidpoet.convex.client/LogLevel // io.github.androidpoet.convex.client/LogLevel.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.androidpoet.convex.client/LogLevel> // io.github.androidpoet.convex.client/LogLevel.values|values#static(){}[0]
+}
+
+abstract interface io.github.androidpoet.convex.client/ConvexClient { // io.github.androidpoet.convex.client/ConvexClient|null[0]
+    abstract fun clearAuth() // io.github.androidpoet.convex.client/ConvexClient.clearAuth|clearAuth(){}[0]
+    abstract fun close() // io.github.androidpoet.convex.client/ConvexClient.close|close(){}[0]
+    abstract fun setAdminAuth(kotlin/String) // io.github.androidpoet.convex.client/ConvexClient.setAdminAuth|setAdminAuth(kotlin.String){}[0]
+    abstract fun setAuth(kotlin/String) // io.github.androidpoet.convex.client/ConvexClient.setAuth|setAuth(kotlin.String){}[0]
+    abstract suspend fun action(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.client/ConvexClient.action|action(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun consistentQuery(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.client/ConvexClient.consistentQuery|consistentQuery(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun mutation(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.client/ConvexClient.mutation|mutation(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+    abstract suspend fun postRaw(kotlin/String, kotlin/ByteArray, kotlin/String): kotlin/String // io.github.androidpoet.convex.client/ConvexClient.postRaw|postRaw(kotlin.String;kotlin.ByteArray;kotlin.String){}[0]
+    abstract suspend fun query(kotlin/String, kotlinx.serialization.json/JsonObject = ...): io.github.androidpoet.convex.core.result/ConvexResult<kotlinx.serialization.json/JsonElement> // io.github.androidpoet.convex.client/ConvexClient.query|query(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+}
+
+sealed interface io.github.androidpoet.convex.client.auth/AuthState { // io.github.androidpoet.convex.client.auth/AuthState|null[0]
+    open fun headerValue(): kotlin/String? // io.github.androidpoet.convex.client.auth/AuthState.headerValue|headerValue(){}[0]
+
+    final class Admin : io.github.androidpoet.convex.client.auth/AuthState { // io.github.androidpoet.convex.client.auth/AuthState.Admin|null[0]
+        constructor <init>(kotlin/String) // io.github.androidpoet.convex.client.auth/AuthState.Admin.<init>|<init>(kotlin.String){}[0]
+
+        final val deployKey // io.github.androidpoet.convex.client.auth/AuthState.Admin.deployKey|{}deployKey[0]
+            final fun <get-deployKey>(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Admin.deployKey.<get-deployKey>|<get-deployKey>(){}[0]
+
+        final fun component1(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Admin.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.github.androidpoet.convex.client.auth/AuthState.Admin // io.github.androidpoet.convex.client.auth/AuthState.Admin.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.client.auth/AuthState.Admin.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.client.auth/AuthState.Admin.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Admin.toString|toString(){}[0]
+    }
+
+    final class Bearer : io.github.androidpoet.convex.client.auth/AuthState { // io.github.androidpoet.convex.client.auth/AuthState.Bearer|null[0]
+        constructor <init>(kotlin/String) // io.github.androidpoet.convex.client.auth/AuthState.Bearer.<init>|<init>(kotlin.String){}[0]
+
+        final val token // io.github.androidpoet.convex.client.auth/AuthState.Bearer.token|{}token[0]
+            final fun <get-token>(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Bearer.token.<get-token>|<get-token>(){}[0]
+
+        final fun component1(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Bearer.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.github.androidpoet.convex.client.auth/AuthState.Bearer // io.github.androidpoet.convex.client.auth/AuthState.Bearer.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.client.auth/AuthState.Bearer.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.client.auth/AuthState.Bearer.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.Bearer.toString|toString(){}[0]
+    }
+
+    final object None : io.github.androidpoet.convex.client.auth/AuthState { // io.github.androidpoet.convex.client.auth/AuthState.None|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.client.auth/AuthState.None.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.client.auth/AuthState.None.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.androidpoet.convex.client.auth/AuthState.None.toString|toString(){}[0]
+    }
+}
+
+final class io.github.androidpoet.convex.client/ConvexConfig { // io.github.androidpoet.convex.client/ConvexConfig|null[0]
+    constructor <init>(io.github.androidpoet.convex.core.types/DeploymentUrl, kotlin/Boolean = ..., io.github.androidpoet.convex.client/LogLevel = ...) // io.github.androidpoet.convex.client/ConvexConfig.<init>|<init>(io.github.androidpoet.convex.core.types.DeploymentUrl;kotlin.Boolean;io.github.androidpoet.convex.client.LogLevel){}[0]
+
+    final val deploymentUrl // io.github.androidpoet.convex.client/ConvexConfig.deploymentUrl|{}deploymentUrl[0]
+        final fun <get-deploymentUrl>(): io.github.androidpoet.convex.core.types/DeploymentUrl // io.github.androidpoet.convex.client/ConvexConfig.deploymentUrl.<get-deploymentUrl>|<get-deploymentUrl>(){}[0]
+    final val logLevel // io.github.androidpoet.convex.client/ConvexConfig.logLevel|{}logLevel[0]
+        final fun <get-logLevel>(): io.github.androidpoet.convex.client/LogLevel // io.github.androidpoet.convex.client/ConvexConfig.logLevel.<get-logLevel>|<get-logLevel>(){}[0]
+    final val logging // io.github.androidpoet.convex.client/ConvexConfig.logging|{}logging[0]
+        final fun <get-logging>(): kotlin/Boolean // io.github.androidpoet.convex.client/ConvexConfig.logging.<get-logging>|<get-logging>(){}[0]
+
+    final fun component1(): io.github.androidpoet.convex.core.types/DeploymentUrl // io.github.androidpoet.convex.client/ConvexConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // io.github.androidpoet.convex.client/ConvexConfig.component2|component2(){}[0]
+    final fun component3(): io.github.androidpoet.convex.client/LogLevel // io.github.androidpoet.convex.client/ConvexConfig.component3|component3(){}[0]
+    final fun copy(io.github.androidpoet.convex.core.types/DeploymentUrl = ..., kotlin/Boolean = ..., io.github.androidpoet.convex.client/LogLevel = ...): io.github.androidpoet.convex.client/ConvexConfig // io.github.androidpoet.convex.client/ConvexConfig.copy|copy(io.github.androidpoet.convex.core.types.DeploymentUrl;kotlin.Boolean;io.github.androidpoet.convex.client.LogLevel){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.androidpoet.convex.client/ConvexConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.androidpoet.convex.client/ConvexConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.androidpoet.convex.client/ConvexConfig.toString|toString(){}[0]
+}
+
+final class io.github.androidpoet.convex.client/ConvexConfigBuilder { // io.github.androidpoet.convex.client/ConvexConfigBuilder|null[0]
+    final var logLevel // io.github.androidpoet.convex.client/ConvexConfigBuilder.logLevel|{}logLevel[0]
+        final fun <get-logLevel>(): io.github.androidpoet.convex.client/LogLevel // io.github.androidpoet.convex.client/ConvexConfigBuilder.logLevel.<get-logLevel>|<get-logLevel>(){}[0]
+        final fun <set-logLevel>(io.github.androidpoet.convex.client/LogLevel) // io.github.androidpoet.convex.client/ConvexConfigBuilder.logLevel.<set-logLevel>|<set-logLevel>(io.github.androidpoet.convex.client.LogLevel){}[0]
+    final var logging // io.github.androidpoet.convex.client/ConvexConfigBuilder.logging|{}logging[0]
+        final fun <get-logging>(): kotlin/Boolean // io.github.androidpoet.convex.client/ConvexConfigBuilder.logging.<get-logging>|<get-logging>(){}[0]
+        final fun <set-logging>(kotlin/Boolean) // io.github.androidpoet.convex.client/ConvexConfigBuilder.logging.<set-logging>|<set-logging>(kotlin.Boolean){}[0]
+
+    final fun build(): io.github.androidpoet.convex.client/ConvexConfig // io.github.androidpoet.convex.client/ConvexConfigBuilder.build|build(){}[0]
+}
+
+final object io.github.androidpoet.convex.client/Convex { // io.github.androidpoet.convex.client/Convex|null[0]
+    final fun create(kotlin/String, kotlin/Function1<io.github.androidpoet.convex.client/ConvexConfigBuilder, kotlin/Unit> = ...): io.github.androidpoet.convex.client/ConvexClient // io.github.androidpoet.convex.client/Convex.create|create(kotlin.String;kotlin.Function1<io.github.androidpoet.convex.client.ConvexConfigBuilder,kotlin.Unit>){}[0]
+}
+
+final fun io.github.androidpoet.convex.client/createConvexClient(io.github.androidpoet.convex.client/ConvexConfig): io.github.androidpoet.convex.client/ConvexClient // io.github.androidpoet.convex.client/createConvexClient|createConvexClient(io.github.androidpoet.convex.client.ConvexConfig){}[0]
+final suspend fun (io.github.androidpoet.convex.client/ConvexClient).io.github.androidpoet.convex.client/queryPaginated(kotlin/String, kotlinx.serialization.json/JsonObject = ..., io.github.androidpoet.convex.core.models/PaginationOpts): io.github.androidpoet.convex.core.result/ConvexResult<io.github.androidpoet.convex.core.models/PaginationResult> // io.github.androidpoet.convex.client/queryPaginated|queryPaginated@io.github.androidpoet.convex.client.ConvexClient(kotlin.String;kotlinx.serialization.json.JsonObject;io.github.androidpoet.convex.core.models.PaginationOpts){}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.github.androidpoet.convex.client/ConvexClient).io.github.androidpoet.convex.client/actionTyped(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlinx.serialization.json/Json = ...): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.client/actionTyped|actionTyped@io.github.androidpoet.convex.client.ConvexClient(kotlin.String;kotlinx.serialization.json.JsonObject;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.github.androidpoet.convex.client/ConvexClient).io.github.androidpoet.convex.client/mutationTyped(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlinx.serialization.json/Json = ...): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.client/mutationTyped|mutationTyped@io.github.androidpoet.convex.client.ConvexClient(kotlin.String;kotlinx.serialization.json.JsonObject;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final suspend inline fun <#A: reified kotlin/Any?> (io.github.androidpoet.convex.client/ConvexClient).io.github.androidpoet.convex.client/queryTyped(kotlin/String, kotlinx.serialization.json/JsonObject = ..., kotlinx.serialization.json/Json = ...): io.github.androidpoet.convex.core.result/ConvexResult<#A> // io.github.androidpoet.convex.client/queryTyped|queryTyped@io.github.androidpoet.convex.client.ConvexClient(kotlin.String;kotlinx.serialization.json.JsonObject;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]

@@ -19,21 +19,30 @@ package io.github.androidpoet.convex.core.values
  * - `Object`      -> [Obj]
  */
 public sealed interface ConvexValue {
-
     public data object Null : ConvexValue
 
-    public data class Bool(public val value: Boolean) : ConvexValue
+    public data class Bool(
+        public val value: Boolean,
+    ) : ConvexValue
 
     /** A 64-bit IEEE-754 float — the JS `number` type. */
-    public data class Float64(public val value: Double) : ConvexValue
+    public data class Float64(
+        public val value: Double,
+    ) : ConvexValue
 
     /** A signed 64-bit integer — the JS `bigint` / Convex `Int64` type. */
-    public data class Int64(public val value: Long) : ConvexValue
+    public data class Int64(
+        public val value: Long,
+    ) : ConvexValue
 
-    public data class Str(public val value: String) : ConvexValue
+    public data class Str(
+        public val value: String,
+    ) : ConvexValue
 
     /** Raw binary data — the JS `ArrayBuffer` / Convex `Bytes` type. */
-    public class Bytes(public val value: ByteArray) : ConvexValue {
+    public class Bytes(
+        public val value: ByteArray,
+    ) : ConvexValue {
         override fun equals(other: Any?): Boolean =
             this === other || (other is Bytes && value.contentEquals(other.value))
 
@@ -42,9 +51,13 @@ public sealed interface ConvexValue {
         override fun toString(): String = "Bytes(size=${value.size})"
     }
 
-    public data class Arr(public val value: List<ConvexValue>) : ConvexValue
+    public data class Arr(
+        public val value: List<ConvexValue>,
+    ) : ConvexValue
 
-    public data class Obj(public val value: Map<String, ConvexValue>) : ConvexValue
+    public data class Obj(
+        public val value: Map<String, ConvexValue>,
+    ) : ConvexValue
 
     public companion object {
         /** The minimum representable [Int64], matching `MIN_INT64` in `convex/values`. */

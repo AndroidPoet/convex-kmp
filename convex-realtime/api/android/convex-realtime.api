@@ -1,0 +1,47 @@
+public final class io/github/androidpoet/convex/realtime/ReactiveConfigBuilder {
+	public final fun getReconnectInitialDelayMs ()J
+	public final fun getReconnectMaxDelayMs ()J
+	public final fun getSyncPath ()Ljava/lang/String;
+	public final fun setReconnectInitialDelayMs (J)V
+	public final fun setReconnectMaxDelayMs (J)V
+	public final fun setSyncPath (Ljava/lang/String;)V
+}
+
+public abstract interface annotation class io/github/androidpoet/convex/realtime/ReactiveConfigDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface class io/github/androidpoet/convex/realtime/ReactiveConvexClient {
+	public abstract fun action (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun close ()V
+	public abstract fun getConnectionState ()Lkotlinx/coroutines/flow/StateFlow;
+	public abstract fun mutation (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onUpdate (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun query (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setAuth (Ljava/lang/String;)V
+}
+
+public final class io/github/androidpoet/convex/realtime/ReactiveConvexClient$DefaultImpls {
+	public static synthetic fun action$default (Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun mutation$default (Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun onUpdate$default (Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun query$default (Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class io/github/androidpoet/convex/realtime/ReactiveConvexClientKt {
+	public static final fun createReactiveClient (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;
+	public static synthetic fun createReactiveClient$default (Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/androidpoet/convex/realtime/ReactiveConvexClient;
+}
+
+public abstract interface class io/github/androidpoet/convex/realtime/RealtimeClient {
+	public abstract fun close ()V
+	public abstract fun subscribe (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;J)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class io/github/androidpoet/convex/realtime/RealtimeClient$DefaultImpls {
+	public static synthetic fun subscribe$default (Lio/github/androidpoet/convex/realtime/RealtimeClient;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;JILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class io/github/androidpoet/convex/realtime/RealtimeFactoryKt {
+	public static final fun createRealtimeClient (Lio/github/androidpoet/convex/client/ConvexClient;)Lio/github/androidpoet/convex/realtime/RealtimeClient;
+}
+

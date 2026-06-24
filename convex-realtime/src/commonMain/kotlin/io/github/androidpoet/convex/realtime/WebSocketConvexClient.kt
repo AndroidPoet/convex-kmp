@@ -68,21 +68,22 @@ internal class WebSocketConvexClient(
     private val reconnectInitialDelayMs: Long,
     private val reconnectMaxDelayMs: Long,
 ) : ReactiveConvexClient {
-
     private val wsUrl = buildWsUrl(deploymentUrl, syncPath)
     private val sessionId = Uuid.random().toString()
 
-    private val json = Json {
-        classDiscriminator = "type"
-        ignoreUnknownKeys = true
-        isLenient = true
-        encodeDefaults = true
-        explicitNulls = false
-    }
+    private val json =
+        Json {
+            classDiscriminator = "type"
+            ignoreUnknownKeys = true
+            isLenient = true
+            encodeDefaults = true
+            explicitNulls = false
+        }
 
-    private val httpClient = HttpClient(platformEngine()) {
-        install(WebSockets)
-    }
+    private val httpClient =
+        HttpClient(platformEngine()) {
+            install(WebSockets)
+        }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val sendMutex = Mutex()
@@ -127,28 +128,30 @@ internal class WebSocketConvexClient(
     override fun onUpdate(
         path: String,
         args: JsonObject,
-    ): Flow<ConvexResult<JsonElement>> = flow {
-        val token = queryToken(path, args)
-        val (state, isNew) = stateMutex.withLock {
-            val existing = queriesByToken[token]
-            if (existing != null) {
-                existing.refCount++
-                existing to false
-            } else {
-                val id = queryIdCounter++
-                val created = QueryState(id, path, args, MutableStateFlow(null), 1)
-                queriesByToken[token] = created
-                queriesById[id] = created
-                created to true
+    ): Flow<ConvexResult<JsonElement>> =
+        flow {
+            val token = queryToken(path, args)
+            val (state, isNew) =
+                stateMutex.withLock {
+                    val existing = queriesByToken[token]
+                    if (existing != null) {
+                        existing.refCount++
+                        existing to false
+                    } else {
+                        val id = queryIdCounter++
+                        val created = QueryState(id, path, args, MutableStateFlow(null), 1)
+                        queriesByToken[token] = created
+                        queriesById[id] = created
+                        created to true
+                    }
+                }
+            if (isNew) sendQuerySetModification(listOf(AddQuery(state.queryId, path, listOf(args))))
+            try {
+                state.flow.filterNotNull().collect { emit(it) }
+            } finally {
+                unsubscribe(token, state)
             }
         }
-        if (isNew) sendQuerySetModification(listOf(AddQuery(state.queryId, path, listOf(args))))
-        try {
-            state.flow.filterNotNull().collect { emit(it) }
-        } finally {
-            unsubscribe(token, state)
-        }
-    }
 
     override suspend fun query(path: String, args: JsonObject): ConvexResult<JsonElement> =
         onUpdate(path, args).first()
@@ -193,18 +196,20 @@ internal class WebSocketConvexClient(
         args: JsonObject,
     ): ConvexResult<JsonElement> {
         val deferred = CompletableDeferred<ConvexResult<JsonElement>>()
-        val (requestId, message) = stateMutex.withLock {
-            val id = requestIdCounter++
-            val msg: ClientMessage = if (isMutation) {
-                MutationMessage(id, path, listOf(args))
-            } else {
-                ActionMessage(id, path, listOf(args))
+        val (requestId, message) =
+            stateMutex.withLock {
+                val id = requestIdCounter++
+                val msg: ClientMessage =
+                    if (isMutation) {
+                        MutationMessage(id, path, listOf(args))
+                    } else {
+                        ActionMessage(id, path, listOf(args))
+                    }
+                pendingRequests[id] = deferred
+                pendingMessages[id] = msg
+                if (isMutation) inflightMutations++ else inflightActions++
+                id to msg
             }
-            pendingRequests[id] = deferred
-            pendingMessages[id] = msg
-            if (isMutation) inflightMutations++ else inflightActions++
-            id to msg
-        }
         refreshInflightState()
         session?.let { sendRaw(it, message) }
         return try {
@@ -227,36 +232,39 @@ internal class WebSocketConvexClient(
         errorMessage: String?,
         errorData: JsonElement?,
     ) {
-        val deferred = stateMutex.withLock {
-            pendingMessages.remove(requestId)
-            pendingRequests.remove(requestId)
-        } ?: return
-        val outcome = if (success) {
-            ConvexResult.Success(ConvexCodec.decodeToPlainJson(result ?: JsonNull))
-        } else {
-            ConvexResult.Failure(
-                ConvexError(
-                    message = errorMessage ?: "Unknown error",
-                    data = errorData?.let { ConvexCodec.decodeToPlainJson(it) },
-                ),
-            )
-        }
+        val deferred =
+            stateMutex.withLock {
+                pendingMessages.remove(requestId)
+                pendingRequests.remove(requestId)
+            } ?: return
+        val outcome =
+            if (success) {
+                ConvexResult.Success(ConvexCodec.decodeToPlainJson(result ?: JsonNull))
+            } else {
+                ConvexResult.Failure(
+                    ConvexError(
+                        message = errorMessage ?: "Unknown error",
+                        data = errorData?.let { ConvexCodec.decodeToPlainJson(it) },
+                    ),
+                )
+            }
         deferred.complete(outcome)
     }
 
     // ── Subscription bookkeeping ────────────────────────────────────────
 
     private suspend fun unsubscribe(token: String, state: QueryState) {
-        val removed = stateMutex.withLock {
-            state.refCount--
-            if (state.refCount <= 0) {
-                queriesByToken.remove(token)
-                queriesById.remove(state.queryId)
-                true
-            } else {
-                false
+        val removed =
+            stateMutex.withLock {
+                state.refCount--
+                if (state.refCount <= 0) {
+                    queriesByToken.remove(token)
+                    queriesById.remove(state.queryId)
+                    true
+                } else {
+                    false
+                }
             }
-        }
         if (removed) sendQuerySetModification(listOf(RemoveQuery(state.queryId)))
     }
 
@@ -264,11 +272,12 @@ internal class WebSocketConvexClient(
         modifications: List<io.github.androidpoet.convex.realtime.protocol.QuerySetModification>,
     ) {
         val current = session ?: return // resynced in full on reconnect
-        val message = stateMutex.withLock {
-            val base = querySetVersion
-            querySetVersion += modifications.size
-            ModifyQuerySet(baseVersion = base, newVersion = querySetVersion, modifications = modifications)
-        }
+        val message =
+            stateMutex.withLock {
+                val base = querySetVersion
+                querySetVersion += modifications.size
+                ModifyQuerySet(baseVersion = base, newVersion = querySetVersion, modifications = modifications)
+            }
         sendRaw(current, message)
     }
 
@@ -302,13 +311,14 @@ internal class WebSocketConvexClient(
     }
 
     private suspend fun DefaultClientWebSocketSession.onConnected() {
-        val (count, token, adds, pending, ts) = stateMutex.withLock {
-            connectionCount++
-            querySetVersion = 0
-            val addList = queriesById.values.map { AddQuery(it.queryId, it.udfPath, listOf(it.args)) }
-            querySetVersion = addList.size
-            ConnectSnapshot(connectionCount, authToken, addList, pendingMessages.values.toList(), maxObservedTimestamp)
-        }
+        val (count, token, adds, pending, ts) =
+            stateMutex.withLock {
+                connectionCount++
+                querySetVersion = 0
+                val addList = queriesById.values.map { AddQuery(it.queryId, it.udfPath, listOf(it.args)) }
+                querySetVersion = addList.size
+                ConnectSnapshot(connectionCount, authToken, addList, pendingMessages.values.toList(), maxObservedTimestamp)
+            }
         sendRaw(this, Connect(sessionId, count, maxObservedTimestamp = ts))
         token?.let { sendRaw(this, Authenticate(baseVersion = 0, tokenType = "User", value = it)) }
         if (adds.isNotEmpty()) {
@@ -336,19 +346,30 @@ internal class WebSocketConvexClient(
     // ── Inbound message handling ────────────────────────────────────────
 
     private suspend fun handleMessage(text: String) {
-        val message = try {
-            json.decodeFromString(ServerMessage.serializer(), text)
-        } catch (_: Exception) {
-            return // Unknown or unsupported server message; ignore for forward-compat.
-        }
+        val message =
+            try {
+                json.decodeFromString(ServerMessage.serializer(), text)
+            } catch (_: Exception) {
+                return // Unknown or unsupported server message; ignore for forward-compat.
+            }
         when (message) {
             is Transition -> applyTransition(message)
-            is MutationResponse -> completeRequest(
-                message.requestId, message.success, message.result, message.errorMessage, message.errorData,
-            )
-            is ActionResponse -> completeRequest(
-                message.requestId, message.success, message.result, message.errorMessage, message.errorData,
-            )
+            is MutationResponse ->
+                completeRequest(
+                    message.requestId,
+                    message.success,
+                    message.result,
+                    message.errorMessage,
+                    message.errorData,
+                )
+            is ActionResponse ->
+                completeRequest(
+                    message.requestId,
+                    message.success,
+                    message.result,
+                    message.errorMessage,
+                    message.errorData,
+                )
             is AuthError -> { /* Auth rejected; surface via connection state only. */ }
             is FatalError -> session?.close()
             Ping -> { /* Keep-alive; nothing to do. */ }
@@ -363,18 +384,20 @@ internal class WebSocketConvexClient(
             when (modification) {
                 is QueryUpdated -> {
                     val state = stateMutex.withLock { queriesById[modification.queryId] }
-                    state?.flow?.value = ConvexResult.Success(
-                        ConvexCodec.decodeToPlainJson(modification.value ?: JsonNull),
-                    )
+                    state?.flow?.value =
+                        ConvexResult.Success(
+                            ConvexCodec.decodeToPlainJson(modification.value ?: JsonNull),
+                        )
                 }
                 is QueryFailed -> {
                     val state = stateMutex.withLock { queriesById[modification.queryId] }
-                    state?.flow?.value = ConvexResult.Failure(
-                        ConvexError(
-                            message = modification.errorMessage,
-                            data = modification.errorData?.let { ConvexCodec.decodeToPlainJson(it) },
-                        ),
-                    )
+                    state?.flow?.value =
+                        ConvexResult.Failure(
+                            ConvexError(
+                                message = modification.errorMessage,
+                                data = modification.errorData?.let { ConvexCodec.decodeToPlainJson(it) },
+                            ),
+                        )
                 }
                 is QueryRemoved -> { /* Server dropped the query; local state already gone. */ }
             }
@@ -403,12 +426,13 @@ internal class WebSocketConvexClient(
     private companion object {
         fun buildWsUrl(deploymentUrl: String, syncPath: String): String {
             val base = deploymentUrl.trimEnd('/')
-            val wsBase = when {
-                base.startsWith("https://") -> "wss://" + base.removePrefix("https://")
-                base.startsWith("http://") -> "ws://" + base.removePrefix("http://")
-                base.startsWith("wss://") || base.startsWith("ws://") -> base
-                else -> "wss://$base"
-            }
+            val wsBase =
+                when {
+                    base.startsWith("https://") -> "wss://" + base.removePrefix("https://")
+                    base.startsWith("http://") -> "ws://" + base.removePrefix("http://")
+                    base.startsWith("wss://") || base.startsWith("ws://") -> base
+                    else -> "wss://$base"
+                }
             return wsBase + (if (syncPath.startsWith("/")) syncPath else "/$syncPath")
         }
     }

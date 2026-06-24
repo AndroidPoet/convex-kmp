@@ -1,0 +1,51 @@
+---
+title: Platforms
+description: The Kotlin Multiplatform targets Convex KMP supports and the Ktor engine each uses.
+---
+
+# Platforms
+
+Convex KMP ships from a single `commonMain` codebase. Networking is the only platform-specific
+piece, and it's handled for you — each target binds the appropriate Ktor engine automatically.
+
+| Platform | Kotlin target | Ktor engine |
+| --- | --- | --- |
+| Android | `androidTarget()` | OkHttp |
+| iOS | `iosX64()` · `iosArm64()` · `iosSimulatorArm64()` | Darwin |
+| Desktop (JVM) | `jvm()` | OkHttp |
+| Web | `wasmJs()` | Js |
+
+## What's shared
+
+Everything you call lives in `commonMain`:
+
+- `ConvexClient` — `query` / `mutation` / `action`, auth, pagination
+- `ConvexResult<T>` and `ConvexError`
+- the `args { }` DSL and value-class ids (`DocumentId`, `StorageId`, `FunctionReference`)
+- the storage and realtime clients
+
+## What's platform-specific
+
+Only the Ktor engine selection. There is no per-platform API you need to call — `createConvexClient`
+resolves the right engine for the target you're compiling.
+
+## Compiling a target
+
+```bash
+./gradlew compileKotlinJvm              # JVM Desktop
+./gradlew compileKotlinWasmJs           # Web (Wasm)
+./gradlew compileKotlinIosArm64         # iOS device
+./gradlew compileKotlinIosSimulatorArm64 # iOS simulator (Apple silicon)
+```
+
+CI compiles the Apple targets on macOS and the JVM/Wasm targets on Linux, so a platform-specific
+break is caught on a host that can actually link it.
+
+## Modules
+
+| Module | Artifact | Responsibility |
+| --- | --- | --- |
+| **convex-core** | `io.github.androidpoet:convex-core` | Value types, result monad, args DSL, models |
+| **convex-client** | `io.github.androidpoet:convex-client` | HTTP transport, query/mutation/action, auth |
+| **convex-storage** | `io.github.androidpoet:convex-storage` | Upload flow, download URLs, deletion |
+| **convex-realtime** | `io.github.androidpoet:convex-realtime` | Reactive query subscriptions as Flows |

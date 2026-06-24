@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>DestructuringDeclarationWithTooManyEntries:WebSocketConvexClient.kt$WebSocketConvexClient$val (count, token, adds, pending, ts) = stateMutex.withLock { connectionCount++ querySetVersion = 0 val addList = queriesById.values.map { AddQuery(it.queryId, it.udfPath, listOf(it.args)) } querySetVersion = addList.size ConnectSnapshot(connectionCount, authToken, addList, pendingMessages.values.toList(), maxObservedTimestamp) }</ID>
+  </CurrentIssues>
+</SmellBaseline>

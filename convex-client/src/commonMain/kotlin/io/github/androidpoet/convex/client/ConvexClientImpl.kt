@@ -13,7 +13,6 @@ import kotlinx.serialization.json.JsonObject
 internal class ConvexClientImpl(
     private val transport: HttpTransport,
 ) : ConvexClient {
-
     override suspend fun query(
         path: String,
         args: JsonObject,
@@ -22,9 +21,10 @@ internal class ConvexClientImpl(
     override suspend fun consistentQuery(
         path: String,
         args: JsonObject,
-    ): ConvexResult<JsonElement> = ConvexResult.catching {
-        unwrap(transport.executeConsistentQuery(path, args))
-    }
+    ): ConvexResult<JsonElement> =
+        ConvexResult.catching {
+            unwrap(transport.executeConsistentQuery(path, args))
+        }
 
     override suspend fun mutation(
         path: String,
@@ -62,9 +62,10 @@ internal class ConvexClientImpl(
         endpoint: String,
         path: String,
         args: JsonObject,
-    ): ConvexResult<JsonElement> = ConvexResult.catching {
-        unwrap(transport.executeFunction(endpoint, path, args))
-    }
+    ): ConvexResult<JsonElement> =
+        ConvexResult.catching {
+            unwrap(transport.executeFunction(endpoint, path, args))
+        }
 
     /**
      * Unwraps a [ConvexResponse], normalizing the `convex_encoded_json` wire

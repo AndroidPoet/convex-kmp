@@ -1,0 +1,54 @@
+---
+title: File Storage
+description: Upload, fetch download URLs for, and delete files in Convex storage from Kotlin.
+---
+
+import { Callout } from 'nextra/components'
+
+# File Storage
+
+The `convex-storage` module wraps Convex's file storage: upload bytes, get a public download URL,
+and delete by id. Files are referenced by a type-safe `StorageId`.
+
+## Upload
+
+`uploadFile` performs the three-step Convex upload flow (generate URL → POST bytes → record id)
+behind a single suspend call and returns the resulting `StorageId`.
+
+```kotlin
+val storage = createStorageClient(convex)
+
+val storageId: StorageId = storage.uploadFile(
+    data = imageBytes,
+    contentType = "image/png",
+)
+```
+
+## Download URL
+
+Exchange a `StorageId` for a URL you can hand to an image loader or open in a browser.
+
+```kotlin
+val url = storage.getUrl(storageId = StorageId("storage_abc123"))
+```
+
+## Delete
+
+```kotlin
+storage.deleteFile(storageId = StorageId("storage_abc123"))
+```
+
+<Callout type="info">
+  `StorageId` is a value class, so the compiler stops you from passing a `DocumentId` or a raw
+  `String` where a storage reference is expected.
+</Callout>
+
+## Putting it together
+
+```kotlin
+val id = storage.uploadFile(bytes, "image/jpeg")
+val url = storage.getUrl(id)
+
+// later, store `id` against a document via a mutation
+convex.mutation("photos:create", args { "storageId" to id.value })
+```
